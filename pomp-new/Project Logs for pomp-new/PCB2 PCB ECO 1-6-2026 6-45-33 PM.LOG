@@ -1,0 +1,20 @@
+Removed Pin From Net: NetName=NetC14_1 Pin=ro2-1
+Removed Pin From Net: NetName=P_2 Pin=ro2-2
+Removed Pin From Net: NetName=P_1 Pin=Ro1-1
+Removed Pin From Net: NetName=NetC12_1 Pin=Ro1-2
+Removed Member From Class: ClassName=Sheet2 Member=ro2
+Removed Member From Class: ClassName=Sheet2 Member=Ro1
+Added Component: Designator=R?(Res-(1/4)-Stand)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=R?(Res-(1/4)-Stand)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=P_1 Pin=R?-1
+Added Pin To Net: NetName=P_2 Pin=R?-1
+Added Pin To Net: NetName=NetC12_1 Pin=R?-2
+Added Pin To Net: NetName=NetC14_1 Pin=R?-2
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K

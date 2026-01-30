@@ -1,0 +1,38 @@
+Removed Pin From Net: NetName=P_1 Pin=R11-1
+Removed Pin From Net: NetName=P_2 Pin=R11-2
+Change Component Footprint: Designator=R11 Old Footprint=RESC3413X04N New Footprint=2512 Resistor
+Change Component Comment : Designator=R11 Old Comment=0r New Comment=Resistor SMD
+Change component parameters: Designator = "R11" ("R11"); Footprint = "RESC3413X04N"; UniqueID = "\HGQBIOTJ" ("\HGQBIOTJ")
+Add Component: Footprint Not Found GCT_SIM5060-6-0-26-01-X_REVC
+Add Component: Footprint Not Found XCVR_M08-R
+Add Pin To Net: Unknown Pin: Pin J1-C1
+Add Pin To Net: Unknown Pin: Pin J1-C2
+Add Pin To Net: Unknown Pin: Pin J1-C3
+Add Pin To Net: Unknown Pin: Pin J1-C5
+Add Pin To Net: Unknown Pin: Pin J1-C7
+Added Pin To Net: NetName=P_2 Pin=R11-1
+Added Pin To Net: NetName=P_1 Pin=R11-2
+Add Pin To Net: Unknown Pin: Pin U2-1
+Add Pin To Net: Unknown Pin: Pin U2-2
+Add Pin To Net: Unknown Pin: Pin U2-7
+Add Pin To Net: Unknown Pin: Pin U2-8
+Add Pin To Net: Unknown Pin: Pin U2-13
+Add Pin To Net: Unknown Pin: Pin U2-15
+Add Pin To Net: Unknown Pin: Pin U2-16
+Add Pin To Net: Unknown Pin: Pin U2-17
+Add Pin To Net: Unknown Pin: Pin U2-18
+Add Pin To Net: Unknown Pin: Pin U2-19
+Add Pin To Net: Unknown Pin: Pin U2-21
+Add Pin To Net: Unknown Pin: Pin U2-27
+Add Pin To Net: Unknown Pin: Pin U2-30
+Add Pin To Net: Unknown Pin: Pin U2-31
+Add Pin To Net: Unknown Pin: Pin U2-32
+Add Pin To Net: Unknown Pin: Pin U2-33
+Add Pin To Net: Unknown Pin: Pin U2-34
+Add Pin To Net: Unknown Pin: Pin U2-35
+Add Pin To Net: Unknown Pin: Pin U2-36
+Add Pin To Net: Unknown Pin: Pin U2-37
+Add Pin To Net: Unknown Pin: Pin U2-39
+Add Pin To Net: Unknown Pin: Pin U2-41
+Add Class Member: Failed to add class member : Component J1 SIM5060-6-0-26-01-X_REVC
+Add Class Member: Failed to add class member : Component U2 M08-R

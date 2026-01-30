@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=NetD5_1 Pin=T2-1
+Removed Pin From Net: NetName=NetD4_2 Pin=T2-2
+Added Pin To Net: NetName=NetD4_2 Pin=T2-1
+Added Pin To Net: NetName=NetD5_1 Pin=T2-2
+Added Member To Class: ClassName=Pump_Agri Member=Component D4 1N4148UR-1

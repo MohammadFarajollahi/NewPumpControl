@@ -1,0 +1,22 @@
+# ninja log v6
+9	149	7914958328055172	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_9345438667183768884.dir/main.c.json	671cd42f3349eeb0
+149	237	7914958329458562	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_10453640462813471181.dir/stm32f1xx_hal_msp.c.json	d6702fb3bcf1d85a
+238	336	7914958330343121	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_4418158440502777020.dir/stm32f1xx_it.c.json	d19d56faccba3312
+336	421	7914958331326473	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_6596634332695065529.dir/system_stm32f1xx.c.json	e086d80441dbbdce
+422	506	7914958332183651	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_7194546058173733607.dir/stm32f1xx_hal.c.json	9a144d6f48fdd7cf
+506	588	7914958333028757	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_13176892104062249742.dir/stm32f1xx_hal_adc.c.json	1ac0e0b07428fbc9
+588	671	7914958333847610	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_8606157222700128571.dir/stm32f1xx_hal_adc_ex.c.json	77527eca2b3df84a
+672	757	7914958334681017	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_1481171258091028686.dir/stm32f1xx_hal_cortex.c.json	2fec855188e3a2f4
+757	854	7914958335536695	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_9418967261776065146.dir/stm32f1xx_hal_dma.c.json	fbc77595f7acf942
+854	945	7914958336507259	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_1434973802458417369.dir/stm32f1xx_hal_exti.c.json	51a6fa35ceed152f
+946	1029	7914958337421836	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_8522399284413268622.dir/stm32f1xx_hal_flash.c.json	6f2c1f224d304413
+1029	1106	7914958338253984	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_11304044701803077465.dir/stm32f1xx_hal_flash_ex.c.json	22000e1c8a5cbd77
+1107	1186	7914958339031723	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_9298500936648078987.dir/stm32f1xx_hal_gpio.c.json	ab0594a3e5caaa91
+1187	1267	7914958339829377	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_2667170478243439264.dir/stm32f1xx_hal_gpio_ex.c.json	3c95afacdd676605
+1267	1344	7914958340632143	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_8094086371011482870.dir/stm32f1xx_hal_pwr.c.json	5ad5d634e0b2f53
+1344	1426	7914958341407121	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_5763740417511805307.dir/stm32f1xx_hal_rcc.c.json	1ffc7f5a3e9570e4
+1426	1505	7914958342233255	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_4156421304941073795.dir/stm32f1xx_hal_rcc_ex.c.json	78bcc95c9647b46e
+1505	1583	7914958343023766	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_4947243839795554933.dir/stm32f1xx_hal_tim.c.json	bf5337905e6fabb1
+1583	1664	7914958343798077	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_15247131560274826905.dir/stm32f1xx_hal_tim_ex.c.json	8d9429d1c088b9d8
+1665	1743	7914958344611181	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/BrowseInfo/Src_11643779915794663378.dir/stm32f1xx_hal_uart.c.json	620ba968f026b912
+1744	1833	7914958345399218	D:/Electronic/COMPANY/DOZDGIR/Pomp control/PumpNew/COD/PumpAgri/EWARM/PumpAgri/compile_commands.json	977fd42f843e5365

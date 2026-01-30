@@ -1,0 +1,6 @@
+Added Pin To Net: NetName=Pa11 Pin=Remot1-3
+Added Pin To Net: NetName=Pa11 Pin=U3-32
+Added Net: Name=Pa11
+Added Pin To Net: NetName=Pa12 Pin=Remot1-4
+Added Pin To Net: NetName=Pa12 Pin=U3-33
+Added Net: Name=Pa12

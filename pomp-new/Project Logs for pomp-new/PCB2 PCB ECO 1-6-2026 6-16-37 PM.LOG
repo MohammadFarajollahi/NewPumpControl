@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=3.3v Pin=C21-1
+Removed Pin From Net: NetName=GND Pin=C21-2
+Removed Pin From Net: NetName=GND Pin=P1-1
+Removed Pin From Net: NetName=DIO Pin=P1-2
+Removed Pin From Net: NetName=CLK Pin=P1-3
+Removed Pin From Net: NetName=RST Pin=P1-4
+Removed Pin From Net: NetName=3.3v Pin=P1-5
+Removed Member From Class: ClassName=Sheet2 Member=C21
+Removed Member From Class: ClassName=Sheet2 Member=P1
+Add component: Footprint Not Found DO-214AA(SMA)
+Added Pin To Net: NetName=GND Pin=PROGRAM?-1
+Added Pin To Net: NetName=CLK Pin=PROGRAM?-3
+Added Pin To Net: NetName=DIO Pin=PROGRAM?-4
+Add Class Member: Failed to add class member : Component D? 1N5819

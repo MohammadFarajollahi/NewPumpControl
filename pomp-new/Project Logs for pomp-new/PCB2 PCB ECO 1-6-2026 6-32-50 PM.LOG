@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=P_1 Pin=R6-1
+Removed Pin From Net: NetName=NetC12_1 Pin=R6-2
+Removed Pin From Net: NetName=P_2 Pin=R17-1
+Removed Pin From Net: NetName=NetC14_1 Pin=R17-2
+Removed Member From Class: ClassName=Sheet2 Member=R6
+Removed Member From Class: ClassName=Sheet2 Member=R17
+Added Component: Designator=ro2(Res-(5/1)-Stand)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=Ro1(Res-(5/1)-Stand)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetC14_1 Pin=ro2-1
+Added Pin To Net: NetName=P_2 Pin=ro2-2
+Added Pin To Net: NetName=P_1 Pin=Ro1-1
+Added Pin To Net: NetName=NetC12_1 Pin=Ro1-2
+Added Member To Class: ClassName=Sheet2 Member=Component J SIM5060-6-0-26-01-X_REVC
+Added Member To Class: ClassName=Sheet2 Member=Component R4 1.2k
+Added Member To Class: ClassName=Sheet2 Member=Component ro2 1K
+Added Member To Class: ClassName=Sheet2 Member=Component Ro1 1K

@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=current Pin=D6-1
+Removed Pin From Net: NetName=3.3v Pin=D6-2
+Removed Pin From Net: NetName=NetC25_2 Pin=Y1-?
+Removed Member From Class: ClassName=Sheet2 Member=D6
+Add Pin To Net: Unknown Pin: Pin Y1-1
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K

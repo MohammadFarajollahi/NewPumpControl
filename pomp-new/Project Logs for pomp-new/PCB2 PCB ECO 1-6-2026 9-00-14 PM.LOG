@@ -1,0 +1,27 @@
+Removed Pin From Net: NetName=N Pin=R20-2
+Removed Pin From Net: NetName=N Pin=R21-2
+Removed Member From Class: ClassName=Sheet2 Member=R20
+Removed Member From Class: ClassName=Sheet2 Member=R21
+Added Pin To Net: NetName=N Pin=D7-2
+Added Pin To Net: NetName=N Pin=D8-2
+Added Member To Class: ClassName=Sheet2 Member=Component C4 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C5 1000uf
+Added Member To Class: ClassName=Sheet2 Member=Component C6 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C7 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C8 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C10 Cap 10x21
+Added Member To Class: ClassName=Sheet2 Member=Component C11 100n
+Added Member To Class: ClassName=Sheet2 Member=Component C12 Cap 10x21
+Added Member To Class: ClassName=Sheet2 Member=Component C14 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C16 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C17 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C18 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component C20 1000uf
+Added Member To Class: ClassName=Sheet2 Member=Component C25 100nf
+Added Member To Class: ClassName=Sheet2 Member=Component cs2 100nF
+Added Member To Class: ClassName=Sheet2 Member=Component cs3 100nF
+Added Member To Class: ClassName=Sheet2 Member=Component J2 Socket
+Added Member To Class: ClassName=Sheet2 Member=Component J4 Socket
+Added Member To Class: ClassName=Sheet2 Member=Component J5 Socket
+Added Member To Class: ClassName=Sheet2 Member=Component R33 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R34 1k

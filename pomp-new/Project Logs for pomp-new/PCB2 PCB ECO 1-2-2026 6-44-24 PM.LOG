@@ -1,0 +1,55 @@
+Removed Pin From Net: NetName=NetIC2_7 Pin=LED2-1
+Removed Pin From Net: NetName=NetIC2_6 Pin=LED6-1
+Removed Pin From Net: NetName=5v Pin=R12-1
+Removed Pin From Net: NetName=5v Pin=R23-1
+Add Component: Footprint Not Found GCT_SIM5060-6-0-26-01-X_REVC
+Add Component: Footprint Not Found XCVR_M08-R
+Add Pin To Net: Unknown Pin: Pin J1-C1
+Add Pin To Net: Unknown Pin: Pin J1-C2
+Add Pin To Net: Unknown Pin: Pin J1-C3
+Add Pin To Net: Unknown Pin: Pin J1-C5
+Add Pin To Net: Unknown Pin: Pin J1-C7
+Added Pin To Net: NetName=5v Pin=LED2-2
+Added Pin To Net: NetName=5v Pin=LED6-2
+Added Pin To Net: NetName=NetIC2_7 Pin=R12-2
+Added Pin To Net: NetName=NetIC2_6 Pin=R23-2
+Add Pin To Net: Unknown Pin: Pin U2-1
+Add Pin To Net: Unknown Pin: Pin U2-2
+Add Pin To Net: Unknown Pin: Pin U2-7
+Add Pin To Net: Unknown Pin: Pin U2-8
+Add Pin To Net: Unknown Pin: Pin U2-13
+Add Pin To Net: Unknown Pin: Pin U2-15
+Add Pin To Net: Unknown Pin: Pin U2-16
+Add Pin To Net: Unknown Pin: Pin U2-17
+Add Pin To Net: Unknown Pin: Pin U2-18
+Add Pin To Net: Unknown Pin: Pin U2-19
+Add Pin To Net: Unknown Pin: Pin U2-21
+Add Pin To Net: Unknown Pin: Pin U2-27
+Add Pin To Net: Unknown Pin: Pin U2-30
+Add Pin To Net: Unknown Pin: Pin U2-31
+Add Pin To Net: Unknown Pin: Pin U2-32
+Add Pin To Net: Unknown Pin: Pin U2-33
+Add Pin To Net: Unknown Pin: Pin U2-34
+Add Pin To Net: Unknown Pin: Pin U2-35
+Add Pin To Net: Unknown Pin: Pin U2-36
+Add Pin To Net: Unknown Pin: Pin U2-37
+Add Pin To Net: Unknown Pin: Pin U2-39
+Add Pin To Net: Unknown Pin: Pin U2-41
+Added Pin To Net: NetName=NetLED2_1 Pin=LED2-1
+Added Pin To Net: NetName=NetLED2_1 Pin=R12-1
+Added Net: Name=NetLED2_1
+Added Pin To Net: NetName=NetLED6_1 Pin=LED6-1
+Added Pin To Net: NetName=NetLED6_1 Pin=R23-1
+Added Net: Name=NetLED6_1
+Added Member To Class: ClassName=Sheet2 Member=Component C5 100n
+Added Member To Class: ClassName=Sheet2 Member=Component CN2 program
+Added Member To Class: ClassName=Sheet2 Member=Component D9 1N4148UR-1
+Added Member To Class: ClassName=Sheet2 Member=Component D-2 1N4148
+Added Member To Class: ClassName=Sheet2 Member=Component IC3 STM32F030K6T6
+Add Class Member: Failed to add class member : Component J1 SIM5060-6-0-26-01-X_REVC
+Added Member To Class: ClassName=Sheet2 Member=Component J5 Socket
+Added Member To Class: ClassName=Sheet2 Member=Component K2 RELAY NT90TNC12CB
+Added Member To Class: ClassName=Sheet2 Member=Component LED7 Green
+Added Member To Class: ClassName=Sheet2 Member=Component out2
+Added Member To Class: ClassName=Sheet2 Member=Component R19 2.2k
+Add Class Member: Failed to add class member : Component U2 M08-R

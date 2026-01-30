@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=V_SIM Pin=C23-2
+Removed Pin From Net: NetName=V_SIM Pin=J1-C1
+Removed Pin From Net: NetName=SIM_RST Pin=J1-C2
+Removed Pin From Net: NetName=SIM_CLK Pin=J1-C3
+Removed Pin From Net: NetName=SIM_IO Pin=J1-C7
+Removed Member From Class: ClassName=Sheet2 Member=J1
+Added Pin To Net: NetName=V_SIM Pin=C23-1
+Added Pin To Net: NetName=GND Pin=C23-2
+Added Pin To Net: NetName=V_SIM Pin=J-C1
+Added Pin To Net: NetName=SIM_RST Pin=J-C2
+Added Pin To Net: NetName=SIM_CLK Pin=J-C3
+Added Pin To Net: NetName=SIM_IO Pin=J-C7
+Added Pin To Net: NetName=GND Pin=U2-19

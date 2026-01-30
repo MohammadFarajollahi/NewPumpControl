@@ -1,0 +1,9 @@
+Added Component: Designator=cs3(SMD_CAP_1206)
+Add component (AddParameter): Name = "Adding Date"; Value = "1387/12/20"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Designer"; Value = "Saeid Jorablo"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Organazation"; Value = "ControTec"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "100V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=cs3-1
+Added Pin To Net: NetName=5v Pin=cs3-2
+Added Member To Class: ClassName=Sheet2 Member=Component cs3 100nF

@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=NetBuzzer1_1 Pin=Q3-2
+Added Pin To Net: NetName=12v Pin=Q3-2
+Added Member To Class: ClassName=Sheet2 Member=Component Q3 BC807
+Added Member To Class: ClassName=Sheet2 Member=Component R25 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R28 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R29 2.2k
+Added Member To Class: ClassName=Sheet2 Member=Component R30 4.7k
+Added Member To Class: ClassName=Sheet2 Member=Component R31 1k
+Added Member To Class: ClassName=Sheet2 Member=Component R32 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R33 1k
+Added Member To Class: ClassName=Sheet2 Member=Component R35 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R37 4.7k

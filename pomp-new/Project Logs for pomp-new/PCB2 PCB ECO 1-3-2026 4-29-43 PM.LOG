@@ -1,0 +1,28 @@
+Removed Pin From Net: NetName=NetANT1_1 Pin=U2-32
+Added Component: Designator=C27(IND0805)
+Add component (AddParameter): Name = "Data"; Value = "2017-3-10"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Desc."; Value = "INDUCTOR  SMD TOTAL PACKAGES"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Designer"; Value = "Abbas Basereh"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "1u"; VariantName = "[No Variations]"
+Added Component: Designator=C28(IND0805)
+Add component (AddParameter): Name = "Data"; Value = "2017-3-10"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Desc."; Value = "INDUCTOR  SMD TOTAL PACKAGES"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Designer"; Value = "Abbas Basereh"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "1u"; VariantName = "[No Variations]"
+Added Component: Designator=C29(CAP0805)
+Add component (AddParameter): Name = "Adding Date"; Value = "1387/12/20"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Designer"; Value = "Saeid Jorablo"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Organazation"; Value = "ControTec"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "100V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C27-2
+Added Pin To Net: NetName=NetANT1_1 Pin=C28-1
+Added Pin To Net: NetName=GND Pin=C28-2
+Added Pin To Net: NetName=NetANT1_1 Pin=C29-2
+Added Pin To Net: NetName=NetC27_1 Pin=C27-1
+Added Pin To Net: NetName=NetC27_1 Pin=C29-1
+Added Pin To Net: NetName=NetC27_1 Pin=U2-32
+Added Net: Name=NetC27_1
+Added Member To Class: ClassName=Sheet2 Member=Component C27 1u
+Added Member To Class: ClassName=Sheet2 Member=Component C28 1u
+Added Member To Class: ClassName=Sheet2 Member=Component C29 100N

@@ -1,0 +1,29 @@
+Change Component Comment : Designator=R4 Old Comment=1.2k New Comment=2k
+Change Component Comment : Designator=R15 Old Comment=1k New Comment=4.7k
+Change Component Comment : Designator=R21 Old Comment=1k New Comment=4.7k
+Change Component Comment : Designator=R43 Old Comment=1K New Comment=2.2k
+Change Component Comment : Designator=R26 Old Comment=1K New Comment=4.7k
+Change Component Comment : Designator=R28 Old Comment=1K New Comment=4.7k
+Change Component Comment : Designator=R36 Old Comment=1K New Comment=4.7k
+Change Component Comment : Designator=R27 Old Comment=1K New Comment=10k
+Change Component Comment : Designator=R42 Old Comment=1K New Comment=10k
+Change Component Comment : Designator=R39 Old Comment=1K New Comment=330r
+Change Component Comment : Designator=D4 Old Comment=1N4148UR-1 New Comment=4148
+Change Component Comment : Designator=D5 Old Comment=1N4148UR-1 New Comment=4148
+Change Component Comment : Designator=D7 Old Comment=1N4148UR-1 New Comment=4148
+Change Component Comment : Designator=D8 Old Comment=1N4148UR-1 New Comment=4148
+Change Component Comment : Designator=R1 Old Comment=10k New Comment=4.7k
+Change Component Comment : Designator=C27 Old Comment=100nf New Comment=22p
+Change Component Comment : Designator=C28 Old Comment=100nf New Comment=22p
+Change Component Comment : Designator=R23 Old Comment=120R New Comment=1k
+Change Component Comment : Designator=R2 Old Comment=120R New Comment=4.7k
+Change Component Comment : Designator=IC1 Old Comment=LM1117IMPX-ADJ_NOPB New Comment=AMS
+Change Component Comment : Designator=IC3 Old Comment=M24C02-RMN6P New Comment=24c04
+Change Component Comment : Designator=J1 Old Comment=SIM5060-6-0-26-01-X_REVC New Comment=sim
+Change Component Comment : Designator=LD2 Old Comment=SMD LED New Comment=BLUE
+Change Component Comment : Designator=IC2 Old Comment=TP4056X New Comment=TP4056
+Change Component Designator: OldDesignator=R18 NewDesignator=2.2k
+Change Component Designator: OldDesignator=R37 NewDesignator=4.7k
+Change Net Name : Old Net Name=NetIC2_2 New Net Name=Net2.2k_1
+Change Net Name : Old Net Name=NetLED5_2 New Net Name=Net4.7k_2
+Change Net Name : Old Net Name=NetR37_1 New Net Name=Net4.7k_1

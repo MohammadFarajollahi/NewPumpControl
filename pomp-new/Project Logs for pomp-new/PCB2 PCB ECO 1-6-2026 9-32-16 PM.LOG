@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=5v Pin=D2-2
+Removed Member From Class: ClassName=Sheet2 Member=D2
+Added Component: Designator=D?(DIOM4325X250N)
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/SS14/taiwan/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Taiwan Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "SS14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "SMA-2 Taiwan Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/SS14/taiwan/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=5v Pin=D?-C
+Added Pin To Net: NetName=NetD?_A Pin=D?-A
+Added Pin To Net: NetName=NetD?_A Pin=IC2-5
+Added Pin To Net: NetName=NetD?_A Pin=S1-1
+Added Net: Name=NetD?_A
+Added Member To Class: ClassName=Sheet2 Member=Component D? SS14

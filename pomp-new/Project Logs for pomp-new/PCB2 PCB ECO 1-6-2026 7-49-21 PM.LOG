@@ -1,0 +1,17 @@
+Added Component: Designator=Remot(HDR1X7)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=3.3v Pin=Remot-1
+Added Pin To Net: NetName=GND Pin=Remot-2
+Added Pin To Net: NetName=NetRemot_3 Pin=Remot-3
+Added Net: Name=NetRemot_3
+Added Pin To Net: NetName=NetRemot_4 Pin=Remot-4
+Added Net: Name=NetRemot_4
+Added Pin To Net: NetName=NetRemot_5 Pin=Remot-5
+Added Net: Name=NetRemot_5
+Added Pin To Net: NetName=NetRemot_6 Pin=Remot-6
+Added Net: Name=NetRemot_6
+Added Member To Class: ClassName=Sheet2 Member=Component battery? Header 2
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component Remot Header 7

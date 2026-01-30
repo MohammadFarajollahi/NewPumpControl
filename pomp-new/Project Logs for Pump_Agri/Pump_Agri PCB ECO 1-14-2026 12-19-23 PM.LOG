@@ -1,0 +1,32 @@
+Removed Pin From Net: NetName=NetC19_2 Pin=D4-2
+Removed Pin From Net: NetName=GND Pin=D7-1
+Added Pin To Net: NetName=GND Pin=D4-1
+Added Pin To Net: NetName=NetC19_2 Pin=D7-2
+Added Pin To Net: NetName=NetD4_2 Pin=D4-2
+Added Pin To Net: NetName=NetD4_2 Pin=D7-1
+Added Pin To Net: NetName=NetD4_2 Pin=T2-2
+Added Net: Name=NetD4_2
+Added Pin To Net: NetName=NetD5_1 Pin=D5-1
+Added Pin To Net: NetName=NetD5_1 Pin=D8-2
+Added Pin To Net: NetName=NetD5_1 Pin=T2-1
+Added Net: Name=NetD5_1
+Change Class Name : Old Net Name=Sheet2 New Net Name=Pump_Agri
+Added Member To Class: ClassName=Pump_Agri Member=Component C9 100nF
+Added Member To Class: ClassName=Pump_Agri Member=Component C10 100nF
+Added Member To Class: ClassName=Pump_Agri Member=Component C11 100nF
+Added Member To Class: ClassName=Pump_Agri Member=Component C12 100n
+Added Member To Class: ClassName=Pump_Agri Member=Component C13 Cap 10x21
+Added Member To Class: ClassName=Pump_Agri Member=Component C17 100nf
+Added Member To Class: ClassName=Pump_Agri Member=Component C18 100nF
+Added Member To Class: ClassName=Pump_Agri Member=Component C19 100nf
+Added Member To Class: ClassName=Pump_Agri Member=Component C21 100nf
+Added Member To Class: ClassName=Pump_Agri Member=Component C22 100n
+Added Member To Class: ClassName=Pump_Agri Member=Component C23 1000uf
+Added Member To Class: ClassName=Pump_Agri Member=Component C25 100n
+Added Member To Class: ClassName=Pump_Agri Member=Component R29 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R30 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R31 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R32 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R33 2.2k
+Added Member To Class: ClassName=Pump_Agri Member=Component R35 1k
+Added Member To Class: ClassName=Pump_Agri Member=Component R38 4.7k

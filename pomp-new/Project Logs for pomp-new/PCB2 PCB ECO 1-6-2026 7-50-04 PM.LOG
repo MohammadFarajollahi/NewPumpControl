@@ -1,0 +1,8 @@
+Added Pin To Net: NetName=NetRemot_5 Pin=U3-27
+Added Pin To Net: NetName=NetRemot_3 Pin=U3-29
+Added Pin To Net: NetName=NetU3_28 Pin=U3-28
+Added Net: Name=NetU3_28
+Added Pin To Net: NetName=NetU3_30 Pin=U3-30
+Added Net: Name=NetU3_30
+Added Member To Class: ClassName=Sheet2 Member=Component battery? Header 2
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K

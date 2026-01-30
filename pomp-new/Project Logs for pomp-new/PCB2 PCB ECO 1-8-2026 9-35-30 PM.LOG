@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=NetC24_2 Pin=Y1-2
+Removed Member From Class: ClassName=Sheet2 Member=crystal?
+Removed Member From Class: ClassName=Sheet2 Member=Y1
+Added Component: Designator=Y?(XTAL1170X500X450)
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/FOXSDLF/120-20/Fox+Electronics/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Fox Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "FOXSDLF/120-20"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "HC49SD Fox Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/FOXSDLF/120-20/Fox+Electronics/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "8mhz"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetC24_2 Pin=Y?-1
+Added Pin To Net: NetName=NetC25_2 Pin=Y?-2
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component R? 1K
+Added Member To Class: ClassName=Sheet2 Member=Component Y? 8mhz

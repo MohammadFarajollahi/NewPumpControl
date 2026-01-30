@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=GND Pin=S4-1
+Removed Pin From Net: NetName=GND Pin=S4-1
+Removed Pin From Net: NetName=RST Pin=S4-2
+Removed Pin From Net: NetName=RST Pin=S4-2
+Removed Member From Class: ClassName=Sheet2 Member=S4
+Added Pin To Net: NetName=5v Pin=D_BATT?-C
+Added Pin To Net: NetName=NetD_BATT?_A Pin=D_BATT?-A
+Added Pin To Net: NetName=NetD_BATT?_A Pin=PROGRAM?-2
+Added Net: Name=NetD_BATT?_A
