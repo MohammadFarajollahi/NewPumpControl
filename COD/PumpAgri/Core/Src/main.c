@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2026 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+******************************************************************************
+* @file           : main.c
+* @brief          : Main program body
+******************************************************************************
+* @attention
+*
+* Copyright (c) 2026 STMicroelectronics.
+* All rights reserved.
+*
+* This software is licensed under terms that can be found in the LICENSE file
+* in the root directory of this software component.
+* If no LICENSE file comes with this software, it is provided AS-IS.
+*
+******************************************************************************
+*/
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -48,11 +48,15 @@
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
+IWDG_HandleTypeDef hiwdg;
+
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+
+WWDG_HandleTypeDef hwwdg;
 
 /* USER CODE BEGIN PV */
 
@@ -67,6 +71,8 @@ static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_IWDG_Init(void);
+static void MX_WWDG_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -108,68 +114,102 @@ int uartTimeTest3;
 //**************************************
 //    Sim800
 //**************************************
-  //**** First Start ***
-  int MC60_FirstStart_Count;
-  int MC60_Ready=0;
-  int MC60_FirstStart_Timer;
-  int MC60_FirstStart_Error;
-  int model_simcard;
-  //main var
-  int reset_count;
-  char CharMain[300];
-  char str[50];
-  char str_cut[50];
-  int hang;
-  //sms
-  char sms_text[250];
-  char server_number[20] = "+989372425086";
-  const char server_number2[20] = "+989114764806";
-  char input_number[24];
-  char send_number[25];
-  int exti_sms;
-  int SMS_Check_point;
-  int SMS_CHECK_Timer;
-  int SMS_Check_Count;
-  int TimeSMSDone;
-  int SMSDone;
-  char send_number_ucs2[45];
-  int SMSCheck;
-  int main_chek_count;
-  int number = 5;
-  //***Check mc60***
-  int chek_count2;
-  int chek;
-  int chek_count;
-  int main_chek_count;
-  int sim_error_count1;
-  int batt_sms;
-  int anten;
-  float voltag_battery1;
-  char battery_cbc[10];
-  int red_led_count;
-  int chek_sim_ok;
-  int voltag_battery;
-  //****eeprom***
-  //eeprom_24hc01
-  uint8_t pass[10];
-  uint8_t security_save[5];
-  uint8_t sleep_mode_save[5];
-  uint8_t rele_state_save[5];
-  uint8_t speed_user_save[5];
-  uint8_t vibrate_state_save[5]; // vibrate_state_save
-  uint8_t number1[20];
-  uint8_t number2[20];
-  uint8_t id[20];
-  uint8_t gprs_save[5];
-  uint8_t auto_security_save[5];
-  uint8_t car_mode[5];
-  uint8_t Mode[5];
-  uint8_t loc_save[22];
-  uint8_t car_number[20];
-  int anten_send;
-  
-  
-  
+//**** First Start ***
+int MC60_FirstStart_Count;
+int MC60_Ready=0;
+int MC60_FirstStart_Timer;
+int MC60_FirstStart_Error;
+int model_simcard;
+//main var
+int reset_count;
+char CharMain[300];
+char str[200];
+char str_cut[50];
+int hang;
+//sms
+char sms_text[250];
+char server_number[20] = "+989372425086";
+const char server_number2[20] = "+989114764806";
+char input_number[24];
+char send_number[25];
+int exti_sms;
+int SMS_Check_point;
+int SMS_CHECK_Timer;
+int SMS_Check_Count;
+int TimeSMSDone;
+int SMSDone;
+char send_number_ucs2[45];
+int SMSCheck;
+int main_chek_count;
+int number = 5;
+//***Check mc60***
+int chek_count2;
+int chek;
+int chek_count;
+int main_chek_count;
+int sim_error_count1;
+int batt_sms;
+int anten;
+float voltag_battery1;
+char battery_cbc[10];
+int red_led_count;
+int chek_sim_ok;
+int voltag_battery;
+//****eeprom***
+//eeprom_24hc01
+uint8_t pass[10]="1111";
+uint8_t security_save[5];
+uint8_t sleep_mode_save[5];
+uint8_t rele_state_save[5];
+uint8_t speed_user_save[5];
+uint8_t vibrate_state_save[5]; // vibrate_state_save
+uint8_t number1[20] = "+981111111111";
+uint8_t number2[20]= "+981111111111";
+uint8_t number3[20] = "+981111111111";
+uint8_t number4[20]= "+981111111111";
+uint8_t id[20];
+uint8_t gprs_save[5];
+uint8_t auto_security_save[5];
+uint8_t car_mode[5];
+uint8_t Mode[5];
+uint8_t loc_save[22];
+uint8_t car_number[20];
+int anten_send;
+int FirstStartError;
+int security=0;
+int ReleState1;
+int ReleState2;
+int Security = 0;
+float lowCur, highCur;
+uint16_t curTime, relTime;
+int DeviceMode;
+int RemoteMode , AlarmMode;
+int EEpromFault;
+int DMA_Ready;
+
+
+//ADC Var
+#define ADC_CHANNEL_COUNT 2
+uint16_t adc_dma_buffer[ADC_CHANNEL_COUNT];
+uint16_t adc[10];
+int AdcChannelCount = 2;
+int adc1[10];
+float Current;
+float InputVoltage;
+int ADCReady;
+int ShowCurrentCount;
+int AutoCurrentSet=0;
+int AutoCurrentTimer = 0;
+
+int LowCurrentArlarmCount=0;
+int LowCurrentArlarmTimer=0;
+int HighCurrentAlarmCount=0;
+int HighCurrentAlarmTimer=0;
+
+int ReleazeCount = 0;
+int RealizeTimr = 0;
+
+
 //eeprom  
 #define PHONE_MAX_LEN   16
 #define PHONE_COUNT     10   // ?????? 10 ?????
@@ -259,7 +299,6 @@ void show_uart2(char *SendChar)
   HAL_UART_Transmit(&huart2, (uint8_t *) test, len, HAL_MAX_DELAY);
 }
 
-
 void send_atcammand(char *SendChar)
 {
   char test[200];
@@ -269,28 +308,52 @@ void send_atcammand(char *SendChar)
   HAL_UART_Transmit(&huart1, (uint8_t *) test, len, HAL_MAX_DELAY);
 }
 
-
-
-//**************************TIMER*****************************
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   
-    if(MC60_Ready == 0){
-      ++MC60_FirstStart_Timer;//first start
-       HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    }
-    ++main_chek_count;
-    ++chek_count;
-    if(SMS_Check_point == 1)++SMS_CHECK_Timer;//check input sms
-    if(SMSDone ==1)++TimeSMSDone;//delete sms
+  if(MC60_Ready == 0){
+    ++MC60_FirstStart_Timer;//first start
+    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  }
+  ++main_chek_count;
+  ++chek_count;
+  if(SMS_Check_point == 1)++SMS_CHECK_Timer;//check input sms
+  if(SMSDone ==1)++TimeSMSDone;//delete sms
+  if(AutoCurrentSet == 1)++AutoCurrentTimer;
+  if(LowCurrentArlarmCount == 1)++LowCurrentArlarmTimer;
+  if(HighCurrentAlarmCount == 1)++HighCurrentAlarmTimer;
+  if(ReleazeCount == 1)++RealizeTimr;
+  ++ShowCurrentCount;
 }
 
-
+void call(){
+  char msg[50];
+  if(strstr((char*)number1, "+98111111111") == NULL){
+    sprintf(msg , "ATD");
+    strcat(msg,(char *)number1);
+    strcat(msg , ";");
+    send_atcammand(msg);
+  }
+  HAL_Delay(10000);
+  HAL_IWDG_Refresh(&hiwdg);
+  send_atcammand("ATH");
+  HAL_Delay(1000);
+  if(strstr((char*)number2, "+98111111111") == NULL){
+    sprintf(msg , "ATD");
+    strcat(msg,(char *)number2);
+    strcat(msg , ";");
+    send_atcammand(msg);
+  }
+  
+}
 
 
 #include "delay.c"
 #include "i2c_eeprom/i2c_eeprom.c"
+#include "Member.c"
 #include "Sim800.c"
+#include "PowerCheck.c"
+#include "CurrentControl.c"
 #include "check.c"
 #include "MC60_Uart.c"
 /* USER CODE END 0 */
@@ -303,7 +366,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -312,14 +375,14 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -330,48 +393,18 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM3_Init();
+  MX_IWDG_Init();
+  MX_WWDG_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(1);
+  ADC_DMA_Start();
   HAL_TIM_Base_Start_IT(&htim1); 
-   HAL_UART_Receive_IT(&huart1, &rx_data3, 1);
-  show_uart("Start Program");
+  HAL_UART_Receive_IT(&huart1, &rx_data3, 1);
+  show_uart("****Start Program****");
   
   //eeprom config
   I2C_init();
   //eeprom_clear_all();
-  EEPROM_Init_Config();     // ??? ???? ??? ? Factory Default
-  EEPROM_Load_Check_Print();// Load + Check + Print
-  
-  // ????? ???? ???????
-  
-  char msg[256];  // ???? ????? ???? ????
-char received[256]; // ???? ???? ??????? (???? ?? SMS ?? UART)
-  strcpy(received, "ID=87654321;N1=+989123456789;N2=+989987654321;N3=+989111111111;N4=+989222222222;R1=0;R2=1;S=0;LC=2.5;HC=5.0;CT=15;RT=30;RS=1;AM=0;DM=2");
-  
-  // --- ????? ???? ???? ???? ????? ---
-PackData(msg);
-
-// --- ????? ?? ???? UART ?? ????? ---
-show_uart("Sending config:");
-show_uart(msg);
-
-//  
-//  // --- ????????? EEPROM ?? ???????? ???? ---
-//  UnpackData(received);
-//  
-//  // --- ???? EEPROM ????? ??? ? ??????? ?? ??? ---
-//  char check[20];
-//  GET_ID(check);
-//  show_uart("Updated ID:");
-//  show_uart(check);
-//  
-//  GET_Number(0, check);
-//  show_uart("Updated Number1:");
-//  show_uart(check);
-//  
-//  float lc = GET_LowCurrent();
-//  sprintf(msg, "Updated LowCurrent: %.2f A", lc);
-//  show_uart(msg);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -381,8 +414,14 @@ show_uart(msg);
     
     Sim800_Uart();
     Sim800();
+    if(MC60_Ready == 1){
+      PowerCheck();
+      CurrentControl();
+       
+    }
+    HAL_IWDG_Refresh(&hiwdg);
     /* USER CODE END WHILE */
-
+    
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -401,10 +440,11 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -443,13 +483,13 @@ static void MX_ADC1_Init(void)
 {
 
   /* USER CODE BEGIN ADC1_Init 0 */
-
+  
   /* USER CODE END ADC1_Init 0 */
 
   ADC_ChannelConfTypeDef sConfig = {0};
 
   /* USER CODE BEGIN ADC1_Init 1 */
-
+  
   /* USER CODE END ADC1_Init 1 */
 
   /** Common config
@@ -485,8 +525,36 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
-
+  
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_128;
+  hiwdg.Init.Reload = 4095;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
 
 }
 
@@ -499,14 +567,14 @@ static void MX_TIM1_Init(void)
 {
 
   /* USER CODE BEGIN TIM1_Init 0 */
-
+  
   /* USER CODE END TIM1_Init 0 */
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
   /* USER CODE BEGIN TIM1_Init 1 */
-
+  
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 7199;
@@ -531,7 +599,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM1_Init 2 */
-
+  
   /* USER CODE END TIM1_Init 2 */
 
 }
@@ -545,14 +613,14 @@ static void MX_TIM3_Init(void)
 {
 
   /* USER CODE BEGIN TIM3_Init 0 */
-
+  
   /* USER CODE END TIM3_Init 0 */
 
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
   /* USER CODE BEGIN TIM3_Init 1 */
-
+  
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 100;
@@ -579,7 +647,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
-
+  
   /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
 
@@ -594,11 +662,11 @@ static void MX_USART1_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART1_Init 0 */
-
+  
   /* USER CODE END USART1_Init 0 */
 
   /* USER CODE BEGIN USART1_Init 1 */
-
+  
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 9600;
@@ -613,7 +681,7 @@ static void MX_USART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
-
+  
   /* USER CODE END USART1_Init 2 */
 
 }
@@ -627,11 +695,11 @@ static void MX_USART2_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
-
+  
   /* USER CODE END USART2_Init 0 */
 
   /* USER CODE BEGIN USART2_Init 1 */
-
+  
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
   huart2.Init.BaudRate = 9600;
@@ -646,8 +714,38 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
+  
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * @brief WWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_WWDG_Init(void)
+{
+
+  /* USER CODE BEGIN WWDG_Init 0 */
+
+  /* USER CODE END WWDG_Init 0 */
+
+  /* USER CODE BEGIN WWDG_Init 1 */
+
+  /* USER CODE END WWDG_Init 1 */
+  hwwdg.Instance = WWDG;
+  hwwdg.Init.Prescaler = WWDG_PRESCALER_1;
+  hwwdg.Init.Window = 95;
+  hwwdg.Init.Counter = 127;
+  hwwdg.Init.EWIMode = WWDG_EWI_ENABLE;
+  if (HAL_WWDG_Init(&hwwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN WWDG_Init 2 */
+
+  /* USER CODE END WWDG_Init 2 */
 
 }
 
@@ -676,7 +774,7 @@ static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
-
+  
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
@@ -741,12 +839,16 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
-
+  
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *hwwdg)
+{
+  if(hang == 0) HAL_WWDG_Refresh(hwwdg);
+  
+}   
 /* USER CODE END 4 */
 
 /**
@@ -775,7 +877,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

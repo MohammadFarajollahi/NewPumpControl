@@ -2,6 +2,51 @@
 //**************************************
 //    Send SMS
 //**************************************
+
+void ucs2_convert() {
+  memcpy(send_number_ucs2, "", sizeof(1));
+  strcat(send_number_ucs2, "0030");
+  for(int i = 3 ; i <13 ; i++) {
+    substring(send_number, i, i+1);
+    strcpy(CharMain, str_cut);
+    int number_send=atoi(CharMain);
+    switch(number_send) {
+    case 1:
+      strcat(send_number_ucs2, "0031");
+      break;
+    case 2:
+      strcat(send_number_ucs2, "0032");
+      break;
+    case 3:
+      strcat(send_number_ucs2, "0033");
+      break;
+    case 4:
+      strcat(send_number_ucs2, "0034");
+      break;
+    case 5:
+      strcat(send_number_ucs2, "0035");
+      break;
+    case 6:
+      strcat(send_number_ucs2, "0036");
+      break;
+    case 7:
+      strcat(send_number_ucs2, "0037");
+      break;
+    case 8:
+      strcat(send_number_ucs2, "0038");
+      break;
+    case 9:
+      strcat(send_number_ucs2, "0039");
+      break;
+    case 0:
+      strcat(send_number_ucs2, "0030");
+      break;
+      
+    }
+  }
+  
+}
+
 void sms_done() {
   number = 5;      
   SMS_Check_point = 0;
@@ -43,7 +88,7 @@ void send_sms()
   strcat(CharMain, "\r\n");
   
   show_uart(CharMain);
-  
+  HAL_IWDG_Refresh(&hiwdg);
   HAL_UART_Transmit(&huart1, (uint8_t *)CharMain, strlen(CharMain), HAL_MAX_DELAY);
   HAL_Delay(1000);
   HAL_UART_Transmit(&huart1, (uint8_t *)sms_text, strlen(sms_text), HAL_MAX_DELAY);
@@ -62,13 +107,153 @@ void send_sms()
   sms_done();
 }
 
+void send_sms_fars() {
+
+  //		send_atcammand("ATH");
+  //		HAL_Delay(500);
+  send_atcammand("AT+CSCS=\"UCS2\"");
+  HAL_Delay(300);
+  send_atcammand("AT+CSMP=49,167,0,8"); // 17,167,0,8
+  HAL_Delay(500);
+  
+  HAL_IWDG_Refresh(&hiwdg);
+  char ch[5];
+  sprintf(ch, "%c", 34); //sakht char "
+  
+  if (number == 0)
+    strcpy(send_number, server_number);
+  if (number == 6)
+    strcpy(send_number, server_number2);
+  if (number == 1)
+    strcpy(send_number, (char *)number1);
+  if (number == 2)
+    strcpy(send_number, (char *)number2);
+  if (number == 3)
+    strcpy(send_number, (char *)number3);
+  if (number == 4)
+    strcpy(send_number, (char *)number4);
+  
+  ucs2_convert();
+  
+  
+  sprintf(CharMain, "AT+CMGS=");
+  strcat(CharMain, ch);
+  strcat(CharMain, send_number_ucs2);
+  strcat(CharMain, ch);
+  strcat(CharMain, "\r\n");
+  
+  show_uart(CharMain);
+  
+  HAL_UART_Transmit(&huart1, (uint8_t *)CharMain, strlen(CharMain), HAL_MAX_DELAY);
+  HAL_Delay(1000);
+  HAL_UART_Transmit(&huart1, (uint8_t *)sms_text, strlen(sms_text), HAL_MAX_DELAY);
+  HAL_Delay(500);
+  uint8_t sms_send = 0x1A;
+  HAL_UART_Transmit(&huart1, &sms_send, 1, HAL_MAX_DELAY);
+  HAL_Delay(100);
+  HAL_UART_Transmit(&huart1, &sms_send, 1, HAL_MAX_DELAY);
+  HAL_Delay(100);
+  HAL_UART_Transmit(&huart1, &sms_send, 1, HAL_MAX_DELAY);
+  HAL_Delay(100);
+  HAL_UART_Transmit(&huart1, &sms_send, 1, HAL_MAX_DELAY);
+  HAL_Delay(100);
+  HAL_Delay(6000);
+  HAL_IWDG_Refresh(&hiwdg);
+  //send_atcammand("AT+CMGD=1,4");
+  HAL_Delay(500);
+  send_atcammand("AT+CSMP=17,167,0,0");
+  HAL_Delay(500);
+  send_atcammand("AT+CSCS=\"GSM\"");
+  HAL_Delay(500);
+  sms_done();
+}
 
 
 
+//**************************************
+//    INPUT SMS
+//**************************************
+void change_pass()
+{
+  substring(char_test3, 2, 6);
+  strcpy(CharMain, str_cut);
+  substring(char_test3, 21, 22);//R 1111 1111 12345678 +989025088863
+  strcpy(str, str_cut);
+  show_uart(str);
+  if (strstr(CharMain,(char *) pass) != NULL && strstr(str, "+") != NULL)
+  {
+    substring(char_test3, 12, 20);
+    strcpy(CharMain, str_cut);
+    if (strstr(CharMain,(char *) id) != NULL)
+    {
+      char NumberDelet[25];
+      strcpy(NumberDelet,(char *)number1);
+      substring(char_test3, 21, 34);
+      strcpy((char *)car_number, str_cut);
+      show_uart((char *)car_number);
+      substring(char_test3, 7, 11);
+      strcpy(CharMain, str_cut);
+      strcpy((char *)pass, CharMain);  ///***save new pass***///
+      strcpy((char *)number1, input_number);  ///***save new number***///
+      sprintf((char *)number2, "+981111111111");
+      sprintf((char *)number3, "+981111111111");
+      sprintf((char *)number4, "+981111111111");
+      number = 1;
+      sprintf(sms_text, "002A002A002A062E06480634002006220645062F06CC062F002A002A002A");
+      send_sms_fars();
+      HAL_IWDG_Refresh(&hiwdg);
+      sprintf(sms_text, "062D063306270628002006A9062706310628063106CC0020062C062F06CC062F0020062706CC062C0627062F00200634062F");
+      send_sms_fars();
+      SET_Number(0, (char *)number1);
+      HAL_Delay(10);
+      SET_Number(1, (char *)number2);
+      HAL_Delay(10);
+      SET_Number(2, (char *)number3);
+      HAL_Delay(10);
+      SET_Number(3, (char *)number4);
+      HAL_Delay(10);
+      HAL_IWDG_Refresh(&hiwdg);
+      PackData(str);
+      show_uart("Sending config:");
+      show_uart(str);
+      strcpy(sms_text, str);
+      number = 0;
+      send_sms();
+      send_atcammand("AT+CMGD=1,4");
+      HAL_Delay(500);
+      main_chek_count = 0;
+      if(model_simcard == 1) {
+        send_atcammand("AT+CUSD=1,\"*555*4*3*2*2#\"");               
+        HAL_Delay(2000);
+        HAL_IWDG_Refresh(&hiwdg);
+        send_atcammand("AT+CUSD=1,\"*555*3*4*1#\"");
+        HAL_Delay(2000);
+      }              
+      if(model_simcard == 2) {
+        send_atcammand("AT+CUSD=1,\"*100*114#\"");
+        HAL_Delay(3000);
+        HAL_IWDG_Refresh(&hiwdg);  
+        send_atcammand("AT+CUSD=1,\"1\"");
+        HAL_Delay(2000);
+      }
+      HAL_IWDG_Refresh(&hiwdg);  
+      show_uart("register done");
+    }
+    
+  }
+}
+
+void Config(){
+  number = 0;
+  sprintf(sms_text, "PUMP CONFIG OK");
+  send_sms();
+  FirstConfig();
+  HAL_IWDG_Refresh(&hiwdg);
+}
 
 void battry() 
 {
-  sprintf(str, "GSM BATTERY:%d%c\r\nGSM ANTEN:%d%c\r\n", batt_sms,37, anten_send,37);
+  sprintf(str, "GSM BATTERY:%d%c\r\nGSM ANTEN:%d%c", batt_sms,37, anten_send,37);
   show_uart(str);
   strcpy(sms_text, str);
   send_sms();
@@ -76,16 +261,272 @@ void battry()
 
 void Rele1_on() 
 {
+  ReleState1 = 1;
+  SET_Relay(ReleState1, ReleState2);
   HAL_GPIO_WritePin(Rele1_GPIO_Port, Rele1_Pin, GPIO_PIN_SET);
-  strcpy(sms_text, "Out1 is on");
-  send_sms();
+  sprintf(sms_text, "067E0645067E00310020063106480634064600200634062F");
+   if(strstr((char*)number1, "+98111111111") == NULL)
+    {
+      number = 1;
+      send_sms_fars();
+    }
+    if(strstr((char*)number2, "+98111111111") == NULL)
+    {
+      number = 2;
+      send_sms_fars();
+    }
+    if(strstr((char*)number3, "+98111111111") == NULL)
+    {
+      number = 3;
+      send_sms_fars();
+    }
+    if(strstr((char*)number4, "+98111111111") == NULL)
+    {
+      number = 4;
+      send_sms_fars();
+    }
+    HAL_Delay(500);
+  
 }
 
 void Rele1_off() 
 {
+  ReleState1 = 0;
+  SET_Relay(ReleState1, ReleState2);
   HAL_GPIO_WritePin(Rele1_GPIO_Port, Rele1_Pin, GPIO_PIN_RESET);
-  strcpy(sms_text, "Out1 is off");
+  sprintf(sms_text, "067E0645067E00310020062E062706450648063400200634062F");
+    if(strstr((char*)number1, "+98111111111") == NULL)
+    {
+      number = 1;
+      send_sms_fars();
+    }
+    if(strstr((char*)number2, "+98111111111") == NULL)
+    {
+      number = 2;
+      send_sms_fars();
+    }
+    if(strstr((char*)number3, "+98111111111") == NULL)
+    {
+      number = 3;
+      send_sms_fars();
+    }
+    if(strstr((char*)number4, "+98111111111") == NULL)
+    {
+      number = 4;
+      send_sms_fars();
+    }
+    HAL_Delay(500);
+}
+
+void Rele2_on() 
+{
+  ReleState2 = 1;
+  SET_Relay(ReleState1, ReleState2);
+  HAL_GPIO_WritePin(Rele2_GPIO_Port, Rele2_Pin, GPIO_PIN_SET);
+  sprintf(sms_text, "067E0645067E00320020063106480634064600200634062F");
+  if(strstr((char*)number1, "+98111111111") == NULL)
+  {
+    number = 1;
+    send_sms_fars();
+  }
+  if(strstr((char*)number2, "+98111111111") == NULL)
+  {
+    number = 2;
+    send_sms_fars();
+  }
+  if(strstr((char*)number3, "+98111111111") == NULL)
+  {
+    number = 3;
+    send_sms_fars();
+  }
+  if(strstr((char*)number4, "+98111111111") == NULL)
+  {
+    number = 4;
+    send_sms_fars();
+  }
+  HAL_Delay(500);
+}
+
+void Rele2_off() 
+{
+  ReleState2 = 0;
+  SET_Relay(ReleState1, ReleState2);
+  HAL_GPIO_WritePin(Rele2_GPIO_Port, Rele2_Pin, GPIO_PIN_RESET);
+  sprintf(sms_text, "067E0645067E00320020062E062706450648063400200634062F");
+    if(strstr((char*)number1, "+98111111111") == NULL)
+    {
+      number = 1;
+      send_sms_fars();
+    }
+    if(strstr((char*)number2, "+98111111111") == NULL)
+    {
+      number = 2;
+      send_sms_fars();
+    }
+    if(strstr((char*)number3, "+98111111111") == NULL)
+    {
+      number = 3;
+      send_sms_fars();
+    }
+    if(strstr((char*)number4, "+98111111111") == NULL)
+    {
+      number = 4;
+      send_sms_fars();
+    }
+    HAL_Delay(500);
+}
+
+void info(){
+  PackData(str);
+  show_uart("Sending config:");
+  show_uart(str);
+  strcpy(sms_text, str);
   send_sms();
+}
+
+void add_member()
+{
+   substring(char_test3, 2, 6); // A 1111 2 +989372425086
+    strcpy(CharMain, str_cut);
+    substring(char_test3, 9, 10); // A 1111 2 +989372425086
+    strcpy(str, str_cut);
+    if (strstr(CharMain,(char *) pass) != NULL && strstr(str,"+") != NULL)
+    {
+      substring(char_test3, 9, 22);
+      strcpy(CharMain, str_cut);
+      strcpy(send_number, CharMain); //shomare telephon user
+      char NumberCh[10];
+      substring(char_test3, 7, 8); // A 1111 2 +989372425086
+      strcpy(NumberCh, str_cut);
+      if(strstr(NumberCh,"2") != NULL){
+        strcpy((char *)number2, send_number);
+        SET_Number(1, (char *)number2);
+      }
+      if(strstr(NumberCh,"3") != NULL){
+        strcpy((char *)number3, send_number);
+        SET_Number(2, (char *)number3);
+      }
+      if(strstr(NumberCh,"4") != NULL){
+        strcpy((char *)number4, send_number);
+        SET_Number(3, (char *)number4);
+      }
+      sprintf(sms_text, "06A906270631062806310020062C062F06CC062F00200627063606270641064700200634062F");
+      send_sms_fars();
+      HAL_Delay(500);
+      PackData(str);
+      show_uart("Sending config:");
+      show_uart(str);
+       number = 1;
+      strcpy(sms_text, str);
+      send_sms();
+      send_atcammand("AT+CMGD=1,4");
+      HAL_Delay(500);
+    }
+}
+
+void ServerEEPROM()
+{
+  UnpackData(char_test3);
+  strcpy(sms_text, "EEPROM CONFIG OK");
+  send_sms();
+  HAL_Delay(4000);
+  hang = 1;
+}
+
+void CurrentSetting()
+{
+  substring(char_test3, 8, 15); // Current 2.36
+  strcpy(CharMain, str_cut);
+  lowCur = atof(CharMain);
+  SET_LowCurrent(lowCur);
+  sprintf(sms_text, "062C063106CC06270646002006470648062706A9063406CC0020067E0645067E00200630062E06CC0631064700200634062F");
+  send_sms_fars();
+  HAL_Delay(500);
+  sprintf(sms_text , "Current: %.2f A" , lowCur);
+  send_sms();
+  
+}
+
+void OverCurrent()
+{
+  substring(char_test3, 13, 20); // Over current 2.36
+  strcpy(CharMain, str_cut);
+  highCur = atof(CharMain);
+  SET_HighCurrent(highCur);
+  sprintf(sms_text, "062A0646063806CC06450627062A0020062706360627064106470020062C063106CC0627064600200630062E06CC0631064700200634062F");
+  send_sms_fars();
+  HAL_Delay(500);
+  sprintf(sms_text , "Over Current: %.2f A" , highCur);
+  send_sms();
+  
+}
+
+void TimeSetting()
+{
+  substring(char_test3, 5, 10); // time 10
+  strcpy(CharMain, str_cut);
+  curTime = atoi(CharMain);
+  SET_CurrentTime(curTime);
+  sprintf(sms_text, "0632064506270646002006470648062706A9063406CC0020062A0646063806CC064500200634062F");
+  send_sms_fars();
+  HAL_Delay(500);
+  sprintf(sms_text , "Time: %d S" , curTime);
+  send_sms();
+}
+
+void Reset(){
+  sprintf(sms_text , "Reset Pump");
+  send_sms();
+  HAL_Delay(2000);
+  HAL_GPIO_WritePin(MC60_Start_GPIO_Port, MC60_Start_Pin, GPIO_PIN_SET);
+  HAL_Delay(2000);
+  HAL_GPIO_WritePin(MC60_Start_GPIO_Port, MC60_Start_Pin, GPIO_PIN_RESET);
+  HAL_Delay(2000);
+  hang = 1;
+}
+
+
+void AutoCurrentSetting(){
+  sprintf(sms_text, "062A0646063806CC064500200627062A064806450627062A06CC06A90020067E0645067E000D000A06440637064106270020064806310648062F06CC0020062206280020063106270020064806350644002006A9064606CC062F00200648002006450646062A063806310020062806450627064606CC062F");
+  send_sms_fars();
+  HAL_Delay(500);
+  AutoCurrentSet = 1;
+  AutoCurrentTimer = 0;
+  HAL_GPIO_WritePin(Rele1_GPIO_Port, Rele1_Pin, GPIO_PIN_SET);
+  
+}
+
+
+void SendPumpCurrent(){
+  sprintf(sms_text , "Current: %.2f A" , Current);
+  send_sms();
+}
+
+void  RealizeSetting(){
+  substring(char_test3, 8, 20); //Realize 10
+  strcpy(CharMain, str_cut);
+  relTime = atoi(CharMain);
+  SET_ReleaseTime(relTime);
+  sprintf(sms_text, "06320645062706460020068606A9002006A90631062F064600200645062C062F062F00200630062E06CC0631064700200634062F");
+  send_sms_fars();
+  HAL_Delay(500);
+  sprintf(sms_text , "Time: %d S" , relTime);
+  send_sms();
+  
+}
+
+void Security_on(){
+sprintf(sms_text, "062D06270644062A002006270645064606CC062A06CC0020064106390627064400200634062F");
+  send_sms_fars();
+  SET_Security(1);
+  Security = 1;
+}
+
+void Security_off(){
+  sprintf(sms_text, "062D06270644062A002006270645064606CC062A06CC0020063A06CC06310020064106390627064400200634062F");
+  send_sms_fars();
+   SET_Security(0);
+   Security = 0;
 }
 
 
@@ -97,24 +538,138 @@ void Rele1_off()
 void InputSMS()
 {
   
+  if (strstr(char_test3, "CONFIG") != NULL)
+  {
+    Config();
+  }
+  
+   if (strstr(char_test3, "ID=") != NULL)
+  {
+    ServerEEPROM();
+  }
+  
+  if (strstr(char_test3, "info") != NULL)
+  {
+    info();
+  }
+  
+  substring(char_test3, 0, 1);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "R") != NULL)
+  {
+    change_pass();
+  }
+  
+  //**add member***//
+  substring(char_test3, 0, 1);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "A") != NULL)
+  {
+    add_member();
+  }
+  
   if (strstr(char_test3, "BT") != NULL || strstr(char_test3, "Bt") != NULL)
   {
     battry();
-    
   }
   
-  if (strstr(char_test3, "out1 on") != NULL || strstr(char_test3, "Out1 on") != NULL)
+  substring(char_test3, 0, 3);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "ON1") != NULL || strstr(CharMain, "On1") != NULL || strstr(char_test3, "0631064806340646") != NULL || strstr(char_test3, "067E0645067E003100200631064806340646") != NULL)
   {
     Rele1_on();
     
   }
   
-  if (strstr(char_test3, "out1 off") != NULL || strstr(char_test3, "Out1 off") != NULL)
+  substring(char_test3, 0, 3);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "OF1") != NULL || strstr(CharMain, "Of1") != NULL || strstr(char_test3, "062E0627064506480634") != NULL || strstr(char_test3, "067E0645067E00310020062E0627064506480634") != NULL)
   {
     Rele1_off();
     
   }
+  
+  substring(char_test3, 0, 2);
+  strcpy(CharMain, str_cut);
+  if (strstr(char_test3, "OF2") == NULL){
+    if (strstr(CharMain, "OF") != NULL || strstr(CharMain, "Of") != NULL )
+    {
+      Rele1_off();
+      
+    }
+  }
+  
+    substring(char_test3, 0, 3);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "ON2") != NULL || strstr(CharMain, "On2") != NULL || strstr(char_test3, "067E0645067E003200200631064806340646") != NULL)
+  {
+    Rele2_on();
+    
+  }
+  
+  substring(char_test3, 0, 3);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "OF2") != NULL || strstr(CharMain, "Of2") != NULL || strstr(char_test3, "067E0645067E00320020062E0627064506480634") != NULL)
+  {
+    Rele2_off();
+    
+  }
+  
+  substring(char_test3, 0, 7);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "Current") != NULL || strstr(CharMain, "current") != NULL)
+  {
+    CurrentSetting();
+  }
+  
+    substring(char_test3, 0, 7);
+  strcpy(CharMain, str_cut);
+  if (strstr(CharMain, "Uc") != NULL || strstr(CharMain, "UC") != NULL ||  strstr(CharMain, "uc") != NULL)
+  {
+    SendPumpCurrent();
+  }
+  
+   if (strstr(char_test3, "over current") != NULL || strstr(char_test3, "Over current") != NULL)
+  {
+    OverCurrent();
+  }
+  
+   if (strstr(char_test3, "Time") != NULL || strstr(char_test3, "TIME") != NULL || strstr(char_test3, "time") != NULL)
+  {
+    TimeSetting();
+  }
+  
+     if (strstr(char_test3, "Realize") != NULL )
+  {
+    RealizeSetting();
+  }
+  
+   if (strstr(char_test3, "Auto current") != NULL)
+  {
+    AutoCurrentSetting();
+  }
+  
+   if (strstr(char_test3, "reset") != NULL || strstr(char_test3, "Reset") != NULL)
+  {
+    Reset();
+  }
+  
+  
+    if (strstr(char_test3, "S1") != NULL || strstr(char_test3, "s1") != NULL)
+  {
+    Security_on();
+  }
+  
+      if (strstr(char_test3, "S2") != NULL || strstr(char_test3, "s2") != NULL)
+  {
+    Security_off();
+  }
+  
 }
+
+
+
+
 
 
 
@@ -181,21 +736,33 @@ void Read_Input_SMS(){
       number = 0;
       show_uart("SERVER NUMBER1");
     }
-    else if (strstr(CharMain, server_number2) != NULL)     /////////////////number1 send sms
+     if (strstr(CharMain, server_number2) != NULL)     /////////////////number1 send sms
     {
       number = 6;
       show_uart("SERVER NUMBER2");
     }
-   else if (strstr(CharMain,(char *)  number1) != NULL)     /////////////////number1 send sms
+    if (strstr(CharMain,(char *)  number1) != NULL)     /////////////////number1 send sms
     {
       number = 1;
       show_uart("NUMBER1");
     }
     
-   else if (strstr(CharMain,(char *) number2) != NULL)   /////////////////number2 send sms
+    if (strstr(CharMain,(char *) number2) != NULL)   /////////////////number2 send sms
     {
       number = 2;
       show_uart("NUMBER2");
+    }
+    
+    if (strstr(CharMain,(char *) number3) != NULL)   /////////////////number2 send sms
+    {
+      number = 3;
+      show_uart("NUMBER3");
+    }
+    
+    if (strstr(CharMain,(char *) number4) != NULL)   /////////////////number2 send sms
+    {
+      number = 4;
+      show_uart("NUMBER4");
     }
     
     strcpy(input_number, CharMain);
@@ -214,30 +781,47 @@ void Read_Input_SMS(){
     {
       number = 0;
       show_uart("SERVER NUMBER1");
-      
     }
-    else if (strstr(CharMain, server_number2) != NULL)     /////////////////number1 send sms
+    if (strstr(CharMain, server_number2) != NULL)     /////////////////number1 send sms
     {
       number = 6;
       show_uart("SERVER NUMBER2");
     }
-    else if (strstr(CharMain,(char *)  number1) != NULL)     /////////////////number1 send sms
+    if (strstr(CharMain,(char *)  number1) != NULL)     /////////////////number1 send sms
     {
       number = 1;
       show_uart("NUMBER1");
     }
-//    
-//    else if (strstr(CharMain,(char *)  number2) != NULL)   /////////////////number2 send sms
-//    {
-//      number = 2;
-//      show_uart("NUMBER2");
-//    }
+    
+    if (strstr(CharMain,(char *)  number2) != NULL)   /////////////////number2 send sms
+    {
+      number = 2;
+      show_uart("NUMBER2");
+    }
+    
+    if (strstr(CharMain,(char *)  number3) != NULL)   /////////////////number2 send sms
+    {
+      number = 3;
+      show_uart("NUMBER3");
+    }
+    
+    if (strstr(CharMain,(char *)  number4) != NULL)   /////////////////number2 send sms
+    {
+      number = 4;
+      show_uart("NUMBER4");
+    }
     
     strcpy(input_number, CharMain);
     show_uart(input_number);
     
   }
   
+}
+
+void ResetMicro(){
+  show_uart("RESET MICRO");
+  hang = 1;
+  HAL_Delay(5000);
 }
 
 void ResetMC60(){
@@ -254,8 +838,8 @@ void ResetMC60(){
   HAL_Delay(100);
   MC60_FirstStart_Count = 0;
   MC60_FirstStart_Timer = 0;
-//  ++FirstStartError;
-//  if(FirstStartError>=6)ResetMicro();
+  ++FirstStartError;
+  if(FirstStartError>=6)ResetMicro();
 }
 
 void Sim800_Check(){
@@ -504,7 +1088,9 @@ void MC60_Check(){
     show_uart(CharMain);
     main_chek_count = 0;
     anten_send = (anten - 0) * (100 - 0) / (31 - 0) + 0;
-
+    char ss3[100];
+    sprintf(ss3 , "Voltage: %.2f | Current: %.2f" , InputVoltage , Current);
+    show_uart(ss3);
   }
   
   if(chek_count2 >= 3) {
@@ -512,14 +1098,6 @@ void MC60_Check(){
     ResetMC60();
   }
 }
-
-int FirstStartError;
-
-//void ResetMicro(){
-//  show_uart("RESET MICRO");
-//  hang = 1;
-//  HAL_Delay(5000);
-//}
 
 void MC60_start(){
   
@@ -633,11 +1211,21 @@ void MC60_start(){
     memset(char_test3, 0, sizeof(char_test3));
     rx_index1 = 0; 
     chek_count = 54; 
-     HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+    
+     EEPROM_Init_Config();     // ??? ???? ??? ? Factory Default
+     EEPROM_Load_Check_Print();// Load + Check + Print
+     if(eepromFualt == 1){
+       eepromFualt = 0;
+       number = 0;
+       sprintf(sms_text, "CONFIG PUMP");
+       send_sms();
+       FirstConfig();
+     }
+     
+      HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
   }
   
 }
-
 
 void Sim800(){
   

@@ -29,7 +29,7 @@ void Sim800_Uart(void)
     ++uartTimeTest3;
   }
   
-  if(uartTimeTest3 >=2 && UartTrig3 == 1){
+  if(uartTimeTest3 >= 3 && UartTrig3 == 1){
     uartTimeTest3 = 0;
     char *token;
     char *rest = (char*)rx_buffer3;

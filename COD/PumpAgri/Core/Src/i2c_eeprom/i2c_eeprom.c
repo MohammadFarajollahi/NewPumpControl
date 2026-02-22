@@ -477,7 +477,6 @@ void EEPROM_Init_Config(void)
     SET_Number(1, "+989111111111");
     SET_Number(2, "+989111111111");
     SET_Number(3, "+989111111111");
-    
     SET_Relay(0, 0);
     SET_Security(0);
     
@@ -486,15 +485,68 @@ void EEPROM_Init_Config(void)
     
     SET_CurrentTime(10);
     SET_ReleaseTime(60);
-    
     EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, 0);
     EEPROM_WRIGHT(EEPROM_ALARM_ADDR, 0);
     EEPROM_WRIGHT(EEPROM_MODE_ADDR, 1);
+    
+    strcpy((char *)id, "12345678");
+    strcpy((char *)number1, "+989111111111");
+    strcpy((char *)number2, "+989111111111");
+    strcpy((char *)number3, "+989111111111");
+    strcpy((char *)number4, "+989111111111");
+    ReleState1 = 0;
+    ReleState2 = 0;
+    Security = 0;
+    lowCur = 2.1;
+    highCur = 5.5;
+    curTime = 10;
+    relTime = 60;
+    RemoteMode = 0;
+    AlarmMode = 0;
+    DeviceMode = 1;
   }
 }
 
-
-
+void FirstConfig(){
+ // eeprom_clear_all();   // ???? ????? ?? ????? ?????
+  
+  EEPROM_WRIGHT(EEPROM_MAGIC_ADDR, EEPROM_MAGIC_VALUE);
+  
+  SET_ID("12345678");
+  
+  SET_Number(0, "+989111111111");
+  SET_Number(1, "+989111111111");
+  SET_Number(2, "+989111111111");
+  SET_Number(3, "+989111111111");
+  SET_Relay(0, 0);
+  SET_Security(0);
+  
+  SET_LowCurrent(2.1f);
+  SET_HighCurrent(5.1f);
+  
+  SET_CurrentTime(10);
+  SET_ReleaseTime(60);
+  EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, 0);
+  EEPROM_WRIGHT(EEPROM_ALARM_ADDR, 0);
+  EEPROM_WRIGHT(EEPROM_MODE_ADDR, 1);
+  
+  strcpy((char *)id, "12345678");
+  strcpy((char *)number1, "+989111111111");
+  strcpy((char *)number2, "+989111111111");
+  strcpy((char *)number3, "+989111111111");
+  strcpy((char *)number4, "+989111111111");
+  ReleState1 = 0;
+  ReleState2 = 0;
+  Security = 0;
+  lowCur = 2.1;
+  highCur = 5.5;
+  curTime = 10;
+  relTime = 60;
+  RemoteMode = 0;
+  AlarmMode = 0;
+  DeviceMode = 1;
+  
+}
 
 void EEPROM_Warning(char *msg)
 {
@@ -521,47 +573,59 @@ void EEPROM_Load_Check_Print(void)
   char buf[20];
   char ss[100];
   
-  float lowCur, highCur;
-  uint16_t curTime, relTime;
-  uint8_t val;
-  
   show_uart("===== EEPROM CONFIG DUMP =====");
   
   /* -------- ID -------- */
   GET_ID(buf);
-  if(!is_valid_string(buf))
+  strcpy((char *)id, buf);
+  if(!is_valid_string(buf)){
     EEPROM_Warning("Invalid Device ID");
+    eepromFualt = 1;
+  }
   sprintf(ss, "ID: %s", buf);
   show_uart(ss);
   
   /* -------- Numbers -------- */
-  for(uint8_t i = 0; i < 4; i++)
-  {
-    GET_Number(i, buf);
-    if(!is_valid_string(buf))
-    {
-      sprintf(ss, "Phone %d invalid", i+1);
-      EEPROM_Warning(ss);
-    }
-    sprintf(ss, "Phone%d: %s", i+1, buf);
-    show_uart(ss);
-  }
-  
+  GET_Number(0, buf);
+  strcpy((char *)number1, buf);
+  GET_Number(1, buf);
+  strcpy((char *)number2, buf);
+  GET_Number(2, buf);
+  strcpy((char *)number3, buf);
+  GET_Number(3, buf);
+  strcpy((char *)number4, buf);
+  show_uart("Number1:");
+  show_uart((char *)number1);
+  show_uart("Number2:");
+  show_uart((char *)number2);
+  show_uart("Number3:");
+  show_uart((char *)number3);
+  show_uart("Number4:");
+  show_uart((char *)number4);
+ 
   /* -------- Relay States -------- */
-  val = GET_RelayState1();
-  if(!VALID_0_1(val)) EEPROM_Warning("Relay1 state invalid");
-  sprintf(ss, "Relay1: %d", val);
+  ReleState1 = GET_RelayState1();
+  if(!VALID_0_1(ReleState1)){
+    EEPROM_Warning("Relay1 state invalid");
+    eepromFualt = 1;
+  }
+  sprintf(ss, "Relay1: %d", ReleState1);
   show_uart(ss);
+
   
-  val = GET_RelayState2();
-  if(!VALID_0_1(val)) EEPROM_Warning("Relay2 state invalid");
-  sprintf(ss, "Relay2: %d", val);
+  ReleState2 = GET_RelayState2();
+  if(!VALID_0_1(ReleState2)){
+    EEPROM_Warning("Relay2 state invalid");
+    eepromFualt = 1;
+  }
+  sprintf(ss, "Relay2: %d", ReleState2);
   show_uart(ss);
+
   
   /* -------- Security -------- */
-  val = GET_SecurityState();
-  if(!VALID_0_1(val)) EEPROM_Warning("Security state invalid");
-  sprintf(ss, "Security: %d", val);
+  Security = GET_SecurityState();
+  if(!VALID_0_1(Security)) EEPROM_Warning("Security state invalid");
+  sprintf(ss, "Security: %d", Security);
   show_uart(ss);
   
   /* -------- Currents -------- */
@@ -576,11 +640,13 @@ void EEPROM_Load_Check_Print(void)
     EEPROM_Warning("High current invalid");
   sprintf(ss, "HighCurrent: %.2f A", highCur);
   show_uart(ss);
-  
   /* -------- Times -------- */
   curTime = GET_CurrentTime();
-  if(curTime == 0 || curTime > MAX_TIME_SEC)
+  if(curTime == 0 || curTime > MAX_TIME_SEC){
+    
     EEPROM_Warning("CurrentTime invalid");
+    eepromFualt = 1;
+  }
   sprintf(ss, "CurrentTime: %d sec", curTime);
   show_uart(ss);
   
@@ -591,29 +657,28 @@ void EEPROM_Load_Check_Print(void)
   show_uart(ss);
   
   /* -------- Modes -------- */
-  val = GET_RemoteState();
-  if(!VALID_0_1(val)) EEPROM_Warning("RemoteState invalid");
-  sprintf(ss, "RemoteState: %d", val);
+  RemoteMode = GET_RemoteState();
+  if(!VALID_0_1(RemoteMode)) EEPROM_Warning("RemoteState invalid");
+  sprintf(ss, "RemoteState: %d", RemoteMode);
   show_uart(ss);
   
-  val = GET_AlarmMode();
-  if(!VALID_0_1(val)) EEPROM_Warning("AlarmMode invalid");
-  sprintf(ss, "AlarmMode: %d", val);
+  AlarmMode = GET_AlarmMode();
+  if(!VALID_0_1(AlarmMode)) EEPROM_Warning("AlarmMode invalid");
+  sprintf(ss, "AlarmMode: %d", AlarmMode);
   show_uart(ss);
   
-  val = GET_DeviceMode();
-  if(val > 3) EEPROM_Warning("DeviceMode invalid");
-  sprintf(ss, "DeviceMode: %d", val);
+
+  DeviceMode = GET_DeviceMode();
+  if(DeviceMode > 3) EEPROM_Warning("DeviceMode invalid");
+  sprintf(ss, "DeviceMode: %d", DeviceMode);
   show_uart(ss);
   
+  if(ReleState1 == 1)HAL_GPIO_WritePin(Rele1_GPIO_Port, Rele1_Pin, GPIO_PIN_SET);
+  if(ReleState1 == 0)HAL_GPIO_WritePin(Rele1_GPIO_Port, Rele1_Pin, GPIO_PIN_RESET);
+  if(ReleState2 == 1)HAL_GPIO_WritePin(Rele2_GPIO_Port, Rele2_Pin, GPIO_PIN_SET);
+  if(ReleState2 == 0)HAL_GPIO_WritePin(Rele2_GPIO_Port, Rele2_Pin, GPIO_PIN_RESET);
   show_uart("===== EEPROM CHECK DONE =====");
 }
-
-
-
-
-
-
 
 void PackData(char *out)
 {
@@ -650,34 +715,66 @@ void PackData(char *out)
         GET_RemoteState(), GET_AlarmMode(), GET_DeviceMode());
 }
 
-uint16_t CRC16(const char *data, uint16_t len)
+void UnpackData(char *in)
 {
-    uint16_t crc = 0xFFFF;
-    for(uint16_t i = 0; i < len; i++)
+    char *token;
+    char key[8], value[32];
+
+    token = strtok(in, ";");
+    while(token != NULL)
     {
-        crc ^= (uint8_t)data[i];
-        for(uint8_t j=0; j<8; j++)
-        {
-            if(crc & 1) crc = (crc >> 1) ^ 0xA001;
-            else crc >>= 1;
-        }
+        // ??? ???? ???? ? ?????
+        sscanf(token, "%[^=]=%s", key, value);
+
+        // ????? ???? ? ?? ???? ???????
+        if(strcmp(key, "ID") == 0) SET_ID(value);
+        else if(strcmp(key, "N1") == 0) SET_Number(0, value);
+        else if(strcmp(key, "N2") == 0) SET_Number(1, value);
+        else if(strcmp(key, "N3") == 0) SET_Number(2, value);
+        else if(strcmp(key, "N4") == 0) SET_Number(3, value);
+        else if(strcmp(key, "R1") == 0) EEPROM_WRIGHT(EEPROM_RELAY1_ADDR, atoi(value));
+        else if(strcmp(key, "R2") == 0) EEPROM_WRIGHT(EEPROM_RELAY2_ADDR, atoi(value));
+        else if(strcmp(key, "S") == 0) EEPROM_WRIGHT(EEPROM_SECURITY_ADDR, atoi(value));
+        else if(strcmp(key, "LC") == 0) SET_LowCurrent(atof(value));
+        else if(strcmp(key, "HC") == 0) SET_HighCurrent(atof(value));
+        else if(strcmp(key, "CT") == 0) SET_CurrentTime(atoi(value));
+        else if(strcmp(key, "RT") == 0) SET_ReleaseTime(atoi(value));
+        else if(strcmp(key, "RS") == 0) EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, atoi(value));
+        else if(strcmp(key, "AM") == 0) EEPROM_WRIGHT(EEPROM_ALARM_ADDR, atoi(value));
+        else if(strcmp(key, "DM") == 0) EEPROM_WRIGHT(EEPROM_MODE_ADDR, atoi(value));
+
+        token = strtok(NULL, ";");
     }
-    return crc;
 }
 
-void PackData_CRC(char *out)
-{
-    PackData(out); // ???? ????
 
-    // ?????? CRC
-    uint16_t crc = CRC16(out, strlen(out));
+//uint16_t CRC16(const char *data, uint16_t len)
+//{
+//    uint16_t crc = 0xFFFF;
+//    for(uint16_t i = 0; i < len; i++)
+//    {
+//        crc ^= (uint8_t)data[i];
+//        for(uint8_t j=0; j<8; j++)
+//        {
+//            if(crc & 1) crc = (crc >> 1) ^ 0xA001;
+//            else crc >>= 1;
+//        }
+//    }
+//    return crc;
+//}
 
-    // ????? ???? CRC ?? ?????? ???? (?? ??? HEX)
-    char crc_str[10];
-    sprintf(crc_str, "CRC=%04X;", crc);
-    strcat(out, crc_str);
-}
-
+//void PackData_CRC(char *out)
+//{
+//    PackData(out); // ???? ????
+//
+//    // ?????? CRC
+//    uint16_t crc = CRC16(out, strlen(out));
+//
+//    // ????? ???? CRC ?? ?????? ???? (?? ??? HEX)
+//    char crc_str[10];
+//    sprintf(crc_str, "CRC=%04X;", crc);
+//    strcat(out, crc_str);
+//}
 //
 //uint8_t UnpackData_CRC(char *in)
 //{
@@ -732,35 +829,3 @@ void PackData_CRC(char *out)
 //    return 1;
 //}
 
-
-void UnpackData(char *in)
-{
-    char *token;
-    char key[8], value[32];
-
-    token = strtok(in, ";");
-    while(token != NULL)
-    {
-        // ??? ???? ???? ? ?????
-        sscanf(token, "%[^=]=%s", key, value);
-
-        // ????? ???? ? ?? ???? ???????
-        if(strcmp(key, "ID") == 0) SET_ID(value);
-        else if(strcmp(key, "N1") == 0) SET_Number(0, value);
-        else if(strcmp(key, "N2") == 0) SET_Number(1, value);
-        else if(strcmp(key, "N3") == 0) SET_Number(2, value);
-        else if(strcmp(key, "N4") == 0) SET_Number(3, value);
-        else if(strcmp(key, "R1") == 0) EEPROM_WRIGHT(EEPROM_RELAY1_ADDR, atoi(value));
-        else if(strcmp(key, "R2") == 0) EEPROM_WRIGHT(EEPROM_RELAY2_ADDR, atoi(value));
-        else if(strcmp(key, "S") == 0) EEPROM_WRIGHT(EEPROM_SECURITY_ADDR, atoi(value));
-        else if(strcmp(key, "LC") == 0) SET_LowCurrent(atof(value));
-        else if(strcmp(key, "HC") == 0) SET_HighCurrent(atof(value));
-        else if(strcmp(key, "CT") == 0) SET_CurrentTime(atoi(value));
-        else if(strcmp(key, "RT") == 0) SET_ReleaseTime(atoi(value));
-        else if(strcmp(key, "RS") == 0) EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, atoi(value));
-        else if(strcmp(key, "AM") == 0) EEPROM_WRIGHT(EEPROM_ALARM_ADDR, atoi(value));
-        else if(strcmp(key, "DM") == 0) EEPROM_WRIGHT(EEPROM_MODE_ADDR, atoi(value));
-
-        token = strtok(NULL, ";");
-    }
-}

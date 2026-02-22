@@ -41,7 +41,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern int DMA_Ready;
+extern uint16_t adc_dma_buffer[2];
+extern int adc1[10];
+extern int AdcReadCount;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,6 +61,7 @@
 extern DMA_HandleTypeDef hdma_adc1;
 extern TIM_HandleTypeDef htim1;
 extern UART_HandleTypeDef huart1;
+extern WWDG_HandleTypeDef hwwdg;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -201,16 +205,38 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles Window watchdog interrupt.
+  */
+void WWDG_IRQHandler(void)
+{
+  /* USER CODE BEGIN WWDG_IRQn 0 */
+
+  /* USER CODE END WWDG_IRQn 0 */
+  HAL_WWDG_IRQHandler(&hwwdg);
+  /* USER CODE BEGIN WWDG_IRQn 1 */
+
+  /* USER CODE END WWDG_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA1 channel1 global interrupt.
   */
 void DMA1_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-
+  if(DMA_Ready == 0){
+    ++AdcReadCount;
+    adc1[0] += adc_dma_buffer[0];
+    adc1[1] += adc_dma_buffer[1];
+    if(AdcReadCount>=20000){
+      DMA_Ready = 1;
+      AdcReadCount = 0;
+    }
+  }
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-
+  
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 
