@@ -36,7 +36,7 @@ void Sim800_Uart(void)
     while ((token = strtok_r(rest, "\r\n", &rest)) != NULL)
     { 
       snprintf(char_test3, sizeof(char_test3), "%s\r\n", token);
-      show_uart2(char_test3);
+      //show_uart2(char_test3);
       Sim800_Check();
     }
     UartTrig3=0;

@@ -51,7 +51,7 @@ DMA_HandleTypeDef hdma_adc1;
 IWDG_HandleTypeDef hiwdg;
 
 TIM_HandleTypeDef htim1;
-TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -70,9 +70,9 @@ static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_TIM3_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_WWDG_Init(void);
+static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -257,6 +257,21 @@ int eepromFualt;
 #define FLOAT_IS_VALID(x)   ((x) == (x))
 
 
+//*****Sensor Var1*****
+int Pulse1State;
+int Pulse1Timer;
+int DetectPulse1;
+int DetectTimerPulse1;
+int RelizeCount;
+
+//*****Sensor Var2*****
+int Pulse2State;
+int Pulse2Timer;
+int DetectPulse2;
+int DetectTimerPulse2;
+int RelizeCount2;
+
+
 void substring(char string[200], int x, int y)
 {
   memcpy(str_cut, "", sizeof(1));
@@ -308,22 +323,127 @@ void send_atcammand(char *SendChar)
   HAL_UART_Transmit(&huart1, (uint8_t *) test, len, HAL_MAX_DELAY);
 }
 
+int RemotCount1;
+int RemotCount11;
+int RemotCount2;
+int RemotCount22;
+int RemotCount3;
+int RemotCount33;
+int RemotCount4;
+int RemotCount44;
+
+int Remot_Security;
+int Remot_Rele;
+int Remot_Change_Rele;
+int Remot_Change_Security;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   
-  if(MC60_Ready == 0){
-    ++MC60_FirstStart_Timer;//first start
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  if (htim->Instance == TIM1){
+    if(MC60_Ready == 0){
+      ++MC60_FirstStart_Timer;//first start
+      HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    }
+    ++main_chek_count;
+    ++chek_count;
+    if(SMS_Check_point == 1)++SMS_CHECK_Timer;//check input sms
+    if(SMSDone ==1)++TimeSMSDone;//delete sms
+    if(AutoCurrentSet == 1)++AutoCurrentTimer;
+    if(LowCurrentArlarmCount == 1)++LowCurrentArlarmTimer;
+    if(HighCurrentAlarmCount == 1)++HighCurrentAlarmTimer;
+    if(ReleazeCount == 1)++RealizeTimr;
+    ++ShowCurrentCount;
+    //Sensor1
+    if(DetectPulse1 == 1)DetectTimerPulse1++;
+    if(Pulse1State == 1)++Pulse1Timer;
+    //Sensor2
+    if(DetectPulse2 == 1)DetectTimerPulse2++;
+    if(Pulse2State == 1)++Pulse2Timer;
+    
+    
+    //Remot Control
+    if(RemotCount1 >=1){
+      ++RemotCount11;
+      if(RemotCount11 >=1){
+        RemotCount1 = 0;
+        RemotCount11=0;
+      }
+    }
+    
+    if(RemotCount2 >=1){
+      ++RemotCount22;
+      if(RemotCount22 >=1){
+        RemotCount2 = 0;
+        RemotCount22=0;
+      }
+    }
+    
+    if(RemotCount3 >=1){
+      ++RemotCount33;
+      if(RemotCount33 >=1){
+        RemotCount3 = 0;
+        RemotCount33=0;
+      }
+    }
+    
+    if(RemotCount4 >=1){
+      ++RemotCount44;
+      if(RemotCount44 >=1){
+        RemotCount4 = 0;
+        RemotCount44=0;
+      }
+    }
   }
-  ++main_chek_count;
-  ++chek_count;
-  if(SMS_Check_point == 1)++SMS_CHECK_Timer;//check input sms
-  if(SMSDone ==1)++TimeSMSDone;//delete sms
-  if(AutoCurrentSet == 1)++AutoCurrentTimer;
-  if(LowCurrentArlarmCount == 1)++LowCurrentArlarmTimer;
-  if(HighCurrentAlarmCount == 1)++HighCurrentAlarmTimer;
-  if(ReleazeCount == 1)++RealizeTimr;
-  ++ShowCurrentCount;
+  
+  if (htim->Instance == TIM4){
+    
+    if (HAL_GPIO_ReadPin(Remot1_GPIO_Port, Remot1_Pin) == 1 && Security == 0 ){ //Security On
+      ++RemotCount1;
+      if(RemotCount1 >= 50){
+        HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+        RemotCount1 = 0;
+        RemotCount11=0;
+        Remot_Change_Security = 1;
+        Remot_Security = 1;
+      }
+    }
+    
+    if (HAL_GPIO_ReadPin(Remot2_GPIO_Port, Remot2_Pin) == 1 && Security == 1 ){ //Security Off
+      ++RemotCount2;
+      if(RemotCount2 >= 50){
+        HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+        RemotCount2 = 0;
+        RemotCount22=0;
+        Remot_Change_Security = 1;
+        Remot_Security = 0;
+      }
+    }
+    
+    if (HAL_GPIO_ReadPin(Remot3_GPIO_Port, Remot3_Pin) == 1 && ReleState1 == 0 ){ //Rele On
+      ++RemotCount3;
+      if(RemotCount3 >= 50){
+        HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+        RemotCount3 = 0;
+        RemotCount33=0;
+        Remot_Change_Rele = 1;
+        Remot_Rele = 1;
+      }
+    }
+    
+    if (HAL_GPIO_ReadPin(Remot4_GPIO_Port, Remot4_Pin) == 1 && ReleState1 == 1 ){ //Rele Of
+      ++RemotCount4;
+      if(RemotCount4 >= 50){
+        HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+        RemotCount4 = 0;
+        RemotCount44=0;
+        Remot_Change_Rele = 1;
+        Remot_Rele = 0;
+      }
+    }
+    
+  }
+  
 }
 
 void call(){
@@ -352,6 +472,8 @@ void call(){
 #include "i2c_eeprom/i2c_eeprom.c"
 #include "Member.c"
 #include "Sim800.c"
+#include "Remot.c"
+#include "Sensor.c"
 #include "PowerCheck.c"
 #include "CurrentControl.c"
 #include "check.c"
@@ -392,16 +514,20 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
-  MX_TIM3_Init();
   MX_IWDG_Init();
   MX_WWDG_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(1);
   ADC_DMA_Start();
   HAL_TIM_Base_Start_IT(&htim1); 
+  HAL_TIM_Base_Start_IT(&htim4); 
   HAL_UART_Receive_IT(&huart1, &rx_data3, 1);
   show_uart("****Start Program****");
   
+   HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
+   HAL_Delay(200);
+   HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
   //eeprom config
   I2C_init();
   //eeprom_clear_all();
@@ -417,11 +543,12 @@ int main(void)
     if(MC60_Ready == 1){
       PowerCheck();
       CurrentControl();
-       
+     if(Security == 1 && PowerCount == 1)Sensor();
+     RemmotControl();
     }
     HAL_IWDG_Refresh(&hiwdg);
     /* USER CODE END WHILE */
-    
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -605,51 +732,47 @@ static void MX_TIM1_Init(void)
 }
 
 /**
-  * @brief TIM3 Initialization Function
+  * @brief TIM4 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_TIM3_Init(void)
+static void MX_TIM4_Init(void)
 {
 
-  /* USER CODE BEGIN TIM3_Init 0 */
-  
-  /* USER CODE END TIM3_Init 0 */
+  /* USER CODE BEGIN TIM4_Init 0 */
 
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
 
-  /* USER CODE BEGIN TIM3_Init 1 */
-  
-  /* USER CODE END TIM3_Init 1 */
-  htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 100;
-  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 200;
-  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 100;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 100;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM3_Init 2 */
-  
-  /* USER CODE END TIM3_Init 2 */
-  HAL_TIM_MspPostInit(&htim3);
+  /* USER CODE BEGIN TIM4_Init 2 */
+
+  /* USER CODE END TIM4_Init 2 */
 
 }
 
@@ -790,7 +913,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, Rele1_Pin|Rele2_Pin|MC60_Start_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, WC_Pin|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, Buzzer_Pin|WC_Pin|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : LED_Pin */
   GPIO_InitStruct.Pin = LED_Pin;
@@ -806,14 +929,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : In__Pin */
-  GPIO_InitStruct.Pin = In__Pin;
+  /*Configure GPIO pin : Sensor2_Pin */
+  GPIO_InitStruct.Pin = Sensor2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(In__GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(Sensor2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : in__Pin Remot4_Pin Remot3_Pin */
-  GPIO_InitStruct.Pin = in__Pin|Remot4_Pin|Remot3_Pin;
+  /*Configure GPIO pins : Sensor1_Pin Remot4_Pin Remot3_Pin */
+  GPIO_InitStruct.Pin = Sensor1_Pin|Remot4_Pin|Remot3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -823,6 +946,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Buzzer_Pin */
+  GPIO_InitStruct.Pin = Buzzer_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Buzzer_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : WC_Pin */
   GPIO_InitStruct.Pin = WC_Pin;

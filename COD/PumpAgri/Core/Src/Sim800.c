@@ -516,21 +516,84 @@ void  RealizeSetting(){
 }
 
 void Security_on(){
-sprintf(sms_text, "062D06270644062A002006270645064606CC062A06CC0020064106390627064400200634062F");
-  send_sms_fars();
-  SET_Security(1);
   Security = 1;
+  show_uart("Security On");
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
+  HAL_Delay(200);
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+  HAL_Delay(100);
+  SET_Security(1);
+  sprintf(sms_text, "062D06270644062A002006270645064606CC062A06CC0020064106390627064400200634062F");
+  send_sms_fars();
+  
+  
 }
 
 void Security_off(){
+  Security = 0;
+  show_uart("Security Off");
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
+  HAL_Delay(200);
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+  HAL_Delay(200);
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_SET);
+  HAL_Delay(200);
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+  HAL_Delay(100);
+  SET_Security(0);
   sprintf(sms_text, "062D06270644062A002006270645064606CC062A06CC0020063A06CC06310020064106390627064400200634062F");
   send_sms_fars();
-   SET_Security(0);
-   Security = 0;
+  
+  
 }
 
 
+void  DeviceMode1(){
+  DeviceMode = 1;
+  sprintf((char *)Mode, "1");
+  EEPROM_WRIGHT(EEPROM_MODE_ADDR, 0);
+  sprintf(sms_text, "062D06270644062A002000310020062A0646063806CC064500200634062F000D000A06320645062706460020003100350020062B0627064606CC0647");
+  send_sms_fars();
+}
 
+void  DeviceMode2(){
+  DeviceMode = 2;
+  sprintf((char *)Mode, "2");
+  EEPROM_WRIGHT(EEPROM_MODE_ADDR, 1);
+  sprintf(sms_text, "062D06270644062A002000320020062A0646063806CC064500200634062F000D000A06320645062706460020003300300020062B0627064606CC0647");
+  send_sms_fars();
+}
+
+void  DeviceMode3(){
+  DeviceMode = 3;
+  sprintf((char *)Mode, "3");
+  EEPROM_WRIGHT(EEPROM_MODE_ADDR, 2);
+  sprintf(sms_text, "062D06270644062A002000330020062A0646063806CC064500200634062F000D000A06320645062706460020003600300020062B0627064606CC0647");
+  send_sms_fars();
+}
+
+void  DeviceMode4(){
+  DeviceMode = 4;
+  sprintf((char *)Mode, "4");
+  EEPROM_WRIGHT(EEPROM_MODE_ADDR, 3);
+  sprintf(sms_text, "062D06270644062A002000340020062A0646063806CC064500200634062F000D000A063206450627064600200031003200300020062B0627064606CC0647");
+  send_sms_fars();
+}
+
+
+void  AlarmOn(){
+  AlarmMode = 1;
+  EEPROM_WRIGHT(EEPROM_ALARM_ADDR, 1);
+  sprintf(sms_text, "0622069806CC06310020064106390627064400200634062F");
+  send_sms_fars();
+}
+
+void  AlarmOff(){
+  AlarmMode = 0;
+  EEPROM_WRIGHT(EEPROM_ALARM_ADDR, 0);
+  sprintf(sms_text, "0622069806CC063100200020063A06CC06310020064106390627064400200634062F");
+  send_sms_fars();
+}
 
 //=================================================
 //                 Read SMS Data
@@ -575,7 +638,8 @@ void InputSMS()
   
   substring(char_test3, 0, 3);
   strcpy(CharMain, str_cut);
-  if (strstr(CharMain, "ON1") != NULL || strstr(CharMain, "On1") != NULL || strstr(char_test3, "0631064806340646") != NULL || strstr(char_test3, "067E0645067E003100200631064806340646") != NULL)
+ if (strstr(CharMain, "ON1") != NULL || strstr(CharMain, "On1") != NULL || strstr(char_test3, "0631064806340646") != NULL || strstr(char_test3, "067E0645067E003100200631064806340646") != NULL || strstr(char_test3, "on1") != NULL)
+  // if (strstr(CharMain, "ON1") != NULL || strstr(CharMain, "On1") != NULL || strstr(char_test3, "062E06270646064700200631064806340646") != NULL || strstr(char_test3, "on1") != NULL)
   {
     Rele1_on();
     
@@ -583,7 +647,8 @@ void InputSMS()
   
   substring(char_test3, 0, 3);
   strcpy(CharMain, str_cut);
-  if (strstr(CharMain, "OF1") != NULL || strstr(CharMain, "Of1") != NULL || strstr(char_test3, "062E0627064506480634") != NULL || strstr(char_test3, "067E0645067E00310020062E0627064506480634") != NULL)
+  if (strstr(CharMain, "OF1") != NULL || strstr(CharMain, "Of1") != NULL || strstr(char_test3, "062E0627064506480634") != NULL || strstr(char_test3, "067E0645067E00310020062E0627064506480634") != NULL || strstr(char_test3, "of1") != NULL)
+  //if (strstr(CharMain, "OF1") != NULL || strstr(CharMain, "Of1") != NULL || strstr(char_test3, "062E0627064606470020062E0627064506480634") != NULL || strstr(char_test3, "of1") != NULL)
   {
     Rele1_off();
     
@@ -591,7 +656,7 @@ void InputSMS()
   
   substring(char_test3, 0, 2);
   strcpy(CharMain, str_cut);
-  if (strstr(char_test3, "OF2") == NULL){
+  if (strstr(char_test3, "OF2") == NULL && strstr(char_test3, "Of2") == NULL && strstr(char_test3, "of2") == NULL){
     if (strstr(CharMain, "OF") != NULL || strstr(CharMain, "Of") != NULL )
     {
       Rele1_off();
@@ -601,7 +666,7 @@ void InputSMS()
   
     substring(char_test3, 0, 3);
   strcpy(CharMain, str_cut);
-  if (strstr(CharMain, "ON2") != NULL || strstr(CharMain, "On2") != NULL || strstr(char_test3, "067E0645067E003200200631064806340646") != NULL)
+  if (strstr(CharMain, "ON2") != NULL || strstr(CharMain, "On2") != NULL || strstr(char_test3, "06280627063A00200631064806340646") != NULL || strstr(char_test3, "on2") != NULL)
   {
     Rele2_on();
     
@@ -609,7 +674,7 @@ void InputSMS()
   
   substring(char_test3, 0, 3);
   strcpy(CharMain, str_cut);
-  if (strstr(CharMain, "OF2") != NULL || strstr(CharMain, "Of2") != NULL || strstr(char_test3, "067E0645067E00320020062E0627064506480634") != NULL)
+  if (strstr(CharMain, "OF2") != NULL || strstr(CharMain, "Of2") != NULL || strstr(char_test3, "06280627063A0020062E0627064506480634") != NULL || strstr(char_test3, "of2") != NULL)
   {
     Rele2_off();
     
@@ -644,25 +709,55 @@ void InputSMS()
     RealizeSetting();
   }
   
-   if (strstr(char_test3, "Auto current") != NULL)
+   if (strstr(char_test3, "Auto current") != NULL || strstr(char_test3, "062A0646063806CC064500200627062A064806450627062A06CC06A9") != NULL)
   {
     AutoCurrentSetting();
   }
   
-   if (strstr(char_test3, "reset") != NULL || strstr(char_test3, "Reset") != NULL)
+   if (strstr(char_test3, "reset") != NULL || strstr(char_test3, "Reset") != NULL ||  strstr(char_test3, "063106CC0633062A") != NULL)
   {
     Reset();
   }
   
   
-    if (strstr(char_test3, "S1") != NULL || strstr(char_test3, "s1") != NULL)
+    if (strstr(char_test3, "S1") != NULL || strstr(char_test3, "s1") != NULL ||  strstr(char_test3, "062F0632062F06AF06CC063100200641063906270644") != NULL)
   {
     Security_on();
   }
   
-      if (strstr(char_test3, "S2") != NULL || strstr(char_test3, "s2") != NULL)
+      if (strstr(char_test3, "S2") != NULL || strstr(char_test3, "s2") != NULL ||  strstr(char_test3, "062F0632062F06AF06CC06310020063A06CC06310641063906270644") != NULL)
   {
     Security_off();
+  }
+  
+   if (strstr(char_test3, "D1") != NULL || strstr(char_test3, "d1") != NULL)
+  {
+    DeviceMode1();
+  }
+  
+   if (strstr(char_test3, "D2") != NULL || strstr(char_test3, "d2") != NULL)
+  {
+    DeviceMode2();
+  }
+  
+   if (strstr(char_test3, "D3") != NULL || strstr(char_test3, "d3") != NULL)
+  {
+    DeviceMode3();
+  }
+  
+   if (strstr(char_test3, "D4") != NULL || strstr(char_test3, "d4") != NULL)
+  {
+    DeviceMode4();
+  }
+  
+    if (strstr(char_test3, "Alarm on") != NULL || strstr(char_test3, "0622069806CC063100200641063906270644") != NULL)
+  {
+    AlarmOn();
+  }
+  
+    if (strstr(char_test3, "Alarm off") != NULL || strstr(char_test3, "0622069806CC06310020063A06CC063100200641063906270644") != NULL || strstr(char_test3, "0622069806CC06310020063A06CC06310641063906270644") != NULL)
+  {
+    AlarmOff();
   }
   
 }
@@ -1105,11 +1200,13 @@ void MC60_start(){
   if(MC60_FirstStart_Count == 0){
     show_uart("MC60 First Start");
     UartTrig=0;
-    memset(rx_buffer1, 0, sizeof(rx_buffer1));
+    memset(rx_buffer1, 0, sizeof(rx_buffer1));                                                                                                                                                                                                                                                               
     rx_index1 = 0; 
     send_atcammand("AT");
     HAL_Delay(100);
     send_atcammand("AT");
+    //HAL_Delay(100);
+   // send_atcammand("AT+IPR=9600");
     MC60_FirstStart_Timer = 0;
     MC60_FirstStart_Count = 1;
   }

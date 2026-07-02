@@ -307,6 +307,7 @@ void eeprom_clear_all(void)
   
   for(i = 0; i < EEPROM_SIZE; i++)
   {
+    HAL_IWDG_Refresh(&hiwdg);
     EEPROM_WRIGHT(i, 0xFF);
   }
 }
@@ -464,25 +465,30 @@ void GET_Number(uint8_t index, char *buf)
 //***********************************init******************************
 void EEPROM_Init_Config(void)
 {
+   show_uart("Init EEPROM...");
   if(EEPROM_READ(EEPROM_MAGIC_ADDR) != EEPROM_MAGIC_VALUE)
   {
+    show_uart("First Init...");
     eepromFualt = 1;
     eeprom_clear_all();   // ???? ????? ?? ????? ?????
     
     EEPROM_WRIGHT(EEPROM_MAGIC_ADDR, EEPROM_MAGIC_VALUE);
     
     SET_ID("12345678");
-    
+    HAL_IWDG_Refresh(&hiwdg);
     SET_Number(0, "+989111111111");
+    HAL_IWDG_Refresh(&hiwdg);
     SET_Number(1, "+989111111111");
+    HAL_IWDG_Refresh(&hiwdg);
     SET_Number(2, "+989111111111");
+    HAL_IWDG_Refresh(&hiwdg);
     SET_Number(3, "+989111111111");
     SET_Relay(0, 0);
     SET_Security(0);
-    
+    HAL_IWDG_Refresh(&hiwdg);
     SET_LowCurrent(1.5f);
     SET_HighCurrent(13.5f);
-    
+    HAL_IWDG_Refresh(&hiwdg);
     SET_CurrentTime(10);
     SET_ReleaseTime(60);
     EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, 0);
@@ -513,17 +519,20 @@ void FirstConfig(){
   EEPROM_WRIGHT(EEPROM_MAGIC_ADDR, EEPROM_MAGIC_VALUE);
   
   SET_ID("12345678");
-  
+  HAL_IWDG_Refresh(&hiwdg);
   SET_Number(0, "+989111111111");
+  HAL_IWDG_Refresh(&hiwdg);
   SET_Number(1, "+989111111111");
+  HAL_IWDG_Refresh(&hiwdg);
   SET_Number(2, "+989111111111");
+  HAL_IWDG_Refresh(&hiwdg);
   SET_Number(3, "+989111111111");
   SET_Relay(0, 0);
   SET_Security(0);
-  
+  HAL_IWDG_Refresh(&hiwdg);
   SET_LowCurrent(2.1f);
   SET_HighCurrent(5.1f);
-  
+  HAL_IWDG_Refresh(&hiwdg);
   SET_CurrentTime(10);
   SET_ReleaseTime(60);
   EEPROM_WRIGHT(EEPROM_REMOTE_ADDR, 0);
@@ -586,13 +595,17 @@ void EEPROM_Load_Check_Print(void)
   show_uart(ss);
   
   /* -------- Numbers -------- */
+  HAL_IWDG_Refresh(&hiwdg);
   GET_Number(0, buf);
   strcpy((char *)number1, buf);
   GET_Number(1, buf);
+  HAL_IWDG_Refresh(&hiwdg);
   strcpy((char *)number2, buf);
   GET_Number(2, buf);
+  HAL_IWDG_Refresh(&hiwdg);
   strcpy((char *)number3, buf);
   GET_Number(3, buf);
+  HAL_IWDG_Refresh(&hiwdg);
   strcpy((char *)number4, buf);
   show_uart("Number1:");
   show_uart((char *)number1);

@@ -1,0 +1,48 @@
+Removed Pin From Net: NetName=3.3v Pin=Remot1-1
+Removed Pin From Net: NetName=Pa12 Pin=Remot1-3
+Removed Pin From Net: NetName=Pa11 Pin=Remot1-4
+Removed Pin From Net: NetName=PB15 Pin=Remot1-5
+Removed Pin From Net: NetName=PB14 Pin=Remot1-6
+Change Component Comment : Designator=R12 Old Comment=1K New Comment=330r
+Change Component Comment : Designator=R13 Old Comment=1K New Comment=330r
+Change Component Comment : Designator=R10 Old Comment=2.2k New Comment=10k
+Change Component Comment : Designator=R19 Old Comment=2.2k New Comment=10k
+Change Component Comment : Designator=R40 Old Comment=4.7k New Comment=1k
+Change Component Comment : Designator=R16 Old Comment=47R New Comment=20r
+Added Component: Designator=R18(SMD_RES_1206)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=R37(SMD_RES_1206)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=R44(SMD_RES_1206)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=R45(SMD_RES_1206)
+Add component (AddParameter): Name = "Power"; Value = "1/8 W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=Pa12 Pin=R18-2
+Added Pin To Net: NetName=Pa11 Pin=R37-2
+Added Pin To Net: NetName=PB15 Pin=R44-2
+Added Pin To Net: NetName=PB14 Pin=R45-2
+Added Pin To Net: NetName=5v Pin=Remot1-1
+Added Pin To Net: NetName=NetR18_1 Pin=R18-1
+Added Pin To Net: NetName=NetR18_1 Pin=Remot1-3
+Added Net: Name=NetR18_1
+Added Pin To Net: NetName=NetR37_1 Pin=R37-1
+Added Pin To Net: NetName=NetR37_1 Pin=Remot1-4
+Added Net: Name=NetR37_1
+Added Pin To Net: NetName=NetR44_1 Pin=R44-1
+Added Pin To Net: NetName=NetR44_1 Pin=Remot1-5
+Added Net: Name=NetR44_1
+Added Pin To Net: NetName=NetR45_1 Pin=R45-1
+Added Pin To Net: NetName=NetR45_1 Pin=Remot1-6
+Added Net: Name=NetR45_1
+Added Member To Class: ClassName=Pump_Agri Member=Component R18 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R37 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R44 1K
+Added Member To Class: ClassName=Pump_Agri Member=Component R45 1K
